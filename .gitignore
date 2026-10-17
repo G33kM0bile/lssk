@@ -1,0 +1,30 @@
+# Runtime configuration
+wp-config.php
+.env
+.env.*
+*.pem
+*.key
+*.p12
+*.pfx
+
+# Database and backups
+*.sql
+*.sql.gz
+*.dump
+*.bak
+*.backup
+*.tar
+*.tar.gz
+*.tgz
+*.zip
+
+# WordPress runtime/content
+wp-content/uploads/
+wp-content/cache/
+wp-content/upgrade/
+
+# Local files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
