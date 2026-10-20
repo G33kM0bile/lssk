@@ -1,8 +1,8 @@
 # Lofoten Sportsskytterklubb – website
 
-Technical documentation for the WordPress installation serving [lssk.no](https://lssk.no).
+Technical documentation and custom plugin source for the WordPress installation serving [lssk.no](https://lssk.no).
 
-This repository contains documentation and non-sensitive configuration notes only. Do not commit WordPress database exports, wp-config.php, credentials, API keys, salts, certificates, private keys, or backups.
+This repository contains documentation, non-sensitive configuration notes, and custom WordPress plugin source. Do not commit WordPress database exports, wp-config.php, credentials, API keys, salts, certificates, private keys, or backups.
 
 ## Environments
 
@@ -21,6 +21,7 @@ The development environment was created by cloning production, then changing the
 - [Clone production to development](docs/cloning-prod-to-dev.md)
 - [WordPress and theme notes](docs/wordpress.md)
 - [Plugins](docs/plugins.md)
+- [Shoot'n Score It calendar synchronization](docs/ssi-sync.md)
 - [Operations](docs/operations.md)
 - [TODO](docs/todo.md)
 

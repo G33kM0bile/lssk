@@ -8,6 +8,11 @@ This file documents the purpose of notable plugins. Update it when the stack cha
 - **The Events Calendar** — club events/calendar functionality.
 - **WooCommerce** — installed as a theme dependency/supporting plugin; not used as an online shop.
 
+## Custom integrations
+
+- **LSSK SSI Sync** — imports public Shoot'n Score It organization 60 events into The Events Calendar. Version 0.1.0 is available in this repository; deployment and live SSI authentication are still pending. Defaults to preview/manual operation and draft imports, with optional hourly sync and publishing.
+- [Setup and deployment notes](ssi-sync.md), [source and full guide](../plugins/lssk-ssi-sync/README.md), [installable ZIP](../dist/lssk-ssi-sync-0.1.0.zip).
+
 ## Administration and environment
 
 - **Environment Indicator** — visually identifies production vs development using `WP_ENVIRONMENT_TYPE`.
