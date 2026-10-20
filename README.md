@@ -6,7 +6,7 @@ This repository contains documentation, non-sensitive configuration notes, custo
 
 ## Applications
 
-- [Shot Counter](shot-counter/README.md) — offline-first range audio processing and activity dashboard; imported from `G33kM0bile/Shot-counter` with its original Git history. See the [installation and existing-deployment migration guide](shot-counter/docs/INSTALL.md).
+- [Shot Counter](shot-counter/README.md) — offline-first range audio processing and activity dashboard
 - [LSSK SSI Sync](plugins/lssk-ssi-sync/README.md) — imports public Shoot'n Score It events into the WordPress calendar.
 
 ## Environments
