@@ -8,6 +8,7 @@ Updated: 2026-10-20. Changes were made through the signed-in WordPress UI on lss
 | --- | --- |
 | Homepage | Elementor page 193 |
 | Training | Service post 3320, classic editor and Firerangers settings |
+| Disciplines | Pages 1109 (NSF, /training/) and 1118 (DSSN, /dssn/), WordPress custom HTML block and Firerangers banner settings |
 | Footer | Appearance > Widgets > Footer Widget Four; Footer Four Menu |
 | Responsive adjustments | Appearance > Customize > Additional CSS |
 
@@ -27,6 +28,14 @@ Confirmed content: NSF Thursday and DSSN Friday, both 18:00-21:00; visitors may 
 
 The legacy Service template still renders demo repeaters when section headings are empty. Page-scoped Additional CSS hides .service-details-premier-services on .postid-3320. Demo repeater values remain in the admin database and should be removed during a template refactor. Visible training content is maintained in the classic editor. Keep the hiding rule until the template stops outputting those demo sections.
 
+The bottom demo photograph (featured image) was removed from the Training service at the user’s request.
+
+## Discipline pages
+
+NSF and DSSN pages now use original Norwegian copy, training times, beginner information, club contacts, links to training and official federation resources, and cross-links between disciplines. The old Elementor demo events, pricing and archery content were replaced by a WordPress custom HTML block. Edit these pages in WordPress, rather than reopening the old Elementor layout.
+
+The `.lssk-discipline` styles in Additional CSS provide a two-column desktop introduction, single-column mobile layout and training information card. The NSF banner title and the Main Menu label were corrected (NSSF -> NSF). Demo banner images were removed. Existing club photos are temporary; dedicated landscape photos of NSF and DSSN activity are requested to avoid repeating homepage images.
+
 ## Remaining work
 
 - Complete other content pages and audit main/header menus: some still point to demo content or #.
@@ -35,3 +44,4 @@ The legacy Service template still renders demo repeaters when section headings a
 - Calendar currently has no upcoming events.
 - Recheck real-device mobile appearance after future theme/header changes.
 - Consider moving page-specific CSS and Service markup into the child theme during later code maintenance.
+
