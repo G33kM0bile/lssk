@@ -16,7 +16,7 @@ This repository contains documentation, non-sensitive configuration notes, custo
 | Production | 124 | `wordpress` | https://lssk.no | `production` |
 | Development | 105 | `wordpress-dev` | https://dev.lssk.no | `development` |
 
-The WordPress development environment was created by cloning production, then changing the WordPress URLs and environment-specific settings.
+
 
 Shot Counter development is running on Proxmox host **`lab3`**, container **CT107**, at [skudd.lssk.no](https://skudd.lssk.no/). See [Shot Counter development](shot-counter/README.md#development-environment).
 
