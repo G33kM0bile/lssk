@@ -1,5 +1,7 @@
 # Development
 
+## WordPress
+
 - CT: `105`
 - Hostname: `wordpress-dev`
 - URL: https://dev.lssk.no
@@ -30,3 +32,9 @@ Development is deliberately easy to distinguish from production:
 - DEVELOPMENT admin indicator
 - orange development favicon
 - explicit WordPress development environment
+
+## Shot Counter
+
+The Shot Counter development instance is running on Proxmox host **`lab3`** in container **CT107** (CT ID `107`). Its URL is [https://skudd.lssk.no/](https://skudd.lssk.no/).
+
+See the [Shot Counter documentation](../shot-counter/README.md#development-environment) and [installation guide](../shot-counter/docs/INSTALL.md) for application setup and migration instructions.

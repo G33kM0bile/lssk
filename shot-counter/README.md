@@ -6,6 +6,14 @@ An offline-first shot-counting proof of concept for shooting ranges. It accepts 
 
 **Source location:** Shot Counter is maintained in [`G33kM0bile/lssk`, under `shot-counter/`](https://github.com/G33kM0bile/lssk/tree/main/shot-counter). It was consolidated from `G33kM0bile/Shot-counter` on 21 October 2026 with its original Git history preserved. The original repository is retained as a historical reference. Existing installations should follow the [migration notes](docs/INSTALL.md#existing-installations-from-the-original-repository) before switching update sources.
 
+## Development environment
+
+The development instance is running on Proxmox host **`lab3`**, container **CT107** (CT ID `107`).
+
+Development URL: [https://skudd.lssk.no/](https://skudd.lssk.no/).
+
+For setup and updates, see the [installation guide](docs/INSTALL.md).
+
 ## Features
 
 - SQLite is the local source of truth.
