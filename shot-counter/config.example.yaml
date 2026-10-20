@@ -1,0 +1,50 @@
+timezone: Europe/Oslo
+
+ui:
+  # Built-in language packs: "en" and "nb" (Norwegian Bokmål).
+  language: en
+  title: Shot Counter
+  # Optional text shown beside the GitHub link in the footer.
+  footer_label: Automatic shot counter
+
+detector:
+  name: range-detector-01
+  range: main-range
+  # Use "uploaded" for real audio files or "simulated" for a demo shot every 30 seconds.
+  mode: uploaded
+  # Keep false for real installations. This may be true independently of mode for a PoC.
+  allow_simulation: false
+
+database:
+  path: /var/lib/shot-counter/shots.db
+
+admin:
+  # Required for privacy controls. Replace this example value.
+  pin: "change-this-pin"
+
+privacy:
+  mode_hours: 6
+  publish_delay_min_hours: 24
+  publish_delay_max_hours: 48
+  registration_pause_hours: 24
+
+api:
+  # Bind to localhost when a reverse proxy such as Nginx is used.
+  host: 127.0.0.1
+  port: 8080
+
+uploads:
+  root: /srv/shot-counter
+  incoming: /srv/shot-counter/incoming
+  max_bytes: 99614720
+
+processing:
+  work_dir: /var/cache/shot-counter
+  scan_interval_seconds: 5
+  stable_checks: 3
+  stable_delay_seconds: 2
+  rms_window_ms: 10
+  threshold_multiplier: 15
+  minimum_threshold: 0.02
+  cluster_gap_ms: 300
+
