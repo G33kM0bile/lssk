@@ -8,7 +8,7 @@ Updated: 2026-10-20. Changes were made through the signed-in WordPress UI on lss
 | --- | --- |
 | Homepage | Elementor page 193 |
 | Training | Service post 3320, classic editor and Firerangers settings |
-| Disciplines | Pages 1109 (NSF, /training/) and 1118 (DSSN, /dssn/), WordPress custom HTML block and Firerangers banner settings |
+| Disciplines | Pages 1109 (NSF, /training/) and 1118 (DSSN, /dssn/), NSF: Elementor HTML widget; DSSN: WordPress custom HTML block; Firerangers banner settings |
 | Footer | Appearance > Widgets > Footer Widget Four; Footer Four Menu |
 | Responsive adjustments | Appearance > Customize > Additional CSS |
 
@@ -32,7 +32,7 @@ The bottom demo photograph (featured image) was removed from the Training servic
 
 ## Discipline pages
 
-NSF and DSSN pages now use original Norwegian copy, training times, beginner information, club contacts, links to training and official federation resources, and cross-links between disciplines. The old Elementor demo events, pricing and archery content were replaced by a WordPress custom HTML block. Edit these pages in WordPress, rather than reopening the old Elementor layout.
+NSF and DSSN pages now use original Norwegian copy, training times, beginner information, club contacts, links to training and official federation resources, and cross-links between disciplines. NSF (page 1109) is now maintained in an Elementor HTML widget containing the complete `.lssk-discipline` markup. Its old Elementor demo events were removed and the replacement published, so opening Elementor no longer reactivates demo content. DSSN (page 1118) was originally replaced in WordPress; avoid reopening its old Elementor layout until it is migrated in the same way.
 
 The `.lssk-discipline` styles in Additional CSS provide a two-column desktop introduction, single-column mobile layout and training information card. The NSF banner title and the Main Menu label were corrected (NSSF -> NSF). Demo banner images were removed. Existing club photos are temporary; dedicated landscape photos of NSF and DSSN activity are requested to avoid repeating homepage images.
 
@@ -40,8 +40,11 @@ The `.lssk-discipline` styles in Additional CSS provide a two-column desktop int
 
 - Complete other content pages and audit main/header menus: some still point to demo content or #.
 - Main-menu Calendar still points to /our-events/ and should use /events/. Homepage card and Footer Four Menu already use /events/.
-- Add an approved privacy page and replace the placeholder privacy link.
+- Privacy page 5461 is published at /personvernerklaering/ and linked from Footer Bottom Menu Two (item 4900). Technical log and backup retention still require review. The adopted ordinary-email retention policy needs manual monthly follow-up.
 - Calendar currently has no upcoming events.
 - Recheck real-device mobile appearance after future theme/header changes.
 - Consider moving page-specific CSS and Service markup into the child theme during later code maintenance.
 
+
+
+NSF menu repair: verified the desktop and mobile Grener > NSF link opens /training/ and displays the current content. Mobile menu logo/contact settings are maintained in FIRERANGERS Options > Mobile Sidebar Settings; use Save Changes there for text fields. Additional CSS handles white logo contrast and long email wrapping.
