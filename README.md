@@ -15,11 +15,9 @@ This repository contains documentation, non-sensitive configuration notes, custo
 |---|---:|---|---|---|
 | Production | Lab2 124 | `wordpress` | https://lssk.no | `production` |
 | Development | Lab2 105 | `wordpress-dev` | https://dev.lssk.no | `development` |
-|ShotCounter Dev | Lab3 | `debian` |https://skudd.lssk.no | `development` |
+|ShotCounter Dev | Lab3 107 | `debian` |https://skudd.lssk.no | `development` |
 
 
-
-Shot Counter development is running on Proxmox host **`lab3`**, container **CT107**, at [skudd.lssk.no](https://skudd.lssk.no/). See [Shot Counter development](shot-counter/README.md#development-environment).
 
 ## Documentation
 
@@ -29,6 +27,7 @@ Shot Counter development is running on Proxmox host **`lab3`**, container **CT10
 - [Clone production to development](docs/cloning-prod-to-dev.md)
 - [WordPress and theme notes](docs/wordpress.md)
 - [Plugins](docs/plugins.md)
+- [Shot Counter development](shot-counter/README.md#development-environment)
 - [Shoot'n Score It calendar synchronization](docs/ssi-sync.md)
 - [Operations](docs/operations.md)
 - [TODO](docs/todo.md)
