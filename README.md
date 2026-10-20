@@ -1,8 +1,13 @@
-# Lofoten Sportsskytterklubb – website
+# Lofoten Sportsskytterklubb – website and club applications
 
-Technical documentation and custom plugin source for the WordPress installation serving [lssk.no](https://lssk.no).
+Technical documentation, custom WordPress plugins, and club application source for [Lofoten Sportsskytterklubb](https://lssk.no).
 
-This repository contains documentation, non-sensitive configuration notes, and custom WordPress plugin source. Do not commit WordPress database exports, wp-config.php, credentials, API keys, salts, certificates, private keys, or backups.
+This repository contains documentation, non-sensitive configuration notes, custom WordPress plugins, and the Shot Counter application. Do not commit WordPress database exports, wp-config.php, live application configuration, databases, audio recordings, credentials, API keys, salts, certificates, private keys, or backups.
+
+## Applications
+
+- [Shot Counter](shot-counter/README.md) — offline-first range audio processing and activity dashboard; imported from `G33kM0bile/Shot-counter` with its original Git history. See the [installation and existing-deployment migration guide](shot-counter/docs/INSTALL.md).
+- [LSSK SSI Sync](plugins/lssk-ssi-sync/README.md) — imports public Shoot'n Score It events into the WordPress calendar.
 
 ## Environments
 

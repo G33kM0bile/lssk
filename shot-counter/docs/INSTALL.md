@@ -3,7 +3,8 @@
 This guide installs the Shot Counter dashboard and audio processor under a dedicated unprivileged account. The example paths are:
 
 ```text
-Application:       /opt/shot-counter
+Repository:        /opt/lssk
+Application:       /opt/shot-counter -> /opt/lssk/shot-counter
 Configuration:     /opt/shot-counter/config.yaml
 SQLite database:   /var/lib/shot-counter/shots.db
 Incoming audio:    /srv/shot-counter/incoming
@@ -14,6 +15,8 @@ Dashboard:         http://127.0.0.1:8080
 ```
 
 Run the administrative commands below from an account with `sudo` access.
+
+The application is maintained in the `shot-counter/` directory of the LSSK repository. A symlink preserves the existing `/opt/shot-counter` paths used by the services and configuration. These steps are for a fresh installation; for an existing checkout of the original repository, use the [migration notes](#existing-installations-from-the-original-repository).
 
 ## 1. Install operating-system packages
 
@@ -47,7 +50,6 @@ sudo adduser \
   --home /opt/shot-counter \
   shot-counter
 
-sudo install -d -o shot-counter -g shot-counter /opt/shot-counter
 sudo install -d -o shot-counter -g shot-counter /var/lib/shot-counter
 sudo install -d -o shot-counter -g shot-counter /var/cache/shot-counter
 sudo install -d -o shot-counter -g shot-counter /srv/shot-counter/incoming
@@ -67,13 +69,14 @@ The repository is public, so no GitHub authentication is required for this clone
 
 ```bash
 sudo git clone \
-  https://github.com/G33kM0bile/Shot-counter.git \
-  /opt/shot-counter
+  https://github.com/G33kM0bile/lssk.git \
+  /opt/lssk
 
-sudo chown -R shot-counter:shot-counter /opt/shot-counter
+sudo chown -R shot-counter:shot-counter /opt/lssk
+sudo ln -s /opt/lssk/shot-counter /opt/shot-counter
 ```
 
-Git accepts the existing target created in step 2 because it is empty. If the directory is not empty, inspect its contents and preserve any existing data before choosing a different checkout location.
+Both `/opt/lssk` and `/opt/shot-counter` must be absent before these commands. If either exists, inspect it and preserve its configuration and data before proceeding. Do not create the symlink inside an existing application directory. The repository's WordPress plugin code is source only; cloning it does not install or change WordPress.
 
 ## 4. Create the Python environment
 
@@ -245,11 +248,11 @@ sudo cp -a \
 Then update the checkout and dependencies:
 
 ```bash
-cd /opt/shot-counter
+cd /opt/lssk
 sudo -u shot-counter git pull --ff-only
 sudo -u shot-counter \
   /opt/shot-counter/venv/bin/pip install \
-  -r requirements.txt
+  -r shot-counter/requirements.txt
 
 sudo systemctl daemon-reload
 sudo systemctl start shot-counter.service
@@ -257,6 +260,22 @@ sudo systemctl start shot-counter-upload-processor.service
 ```
 
 Remove the backup only after the updated services and data have been verified.
+
+## Existing installations from the original repository
+
+Repository consolidation does not alter a running installation. An existing `/opt/shot-counter` checkout of `G33kM0bile/Shot-counter` can continue running, but future application updates come from `G33kM0bile/lssk` under `shot-counter/`. Changing the old checkout's remote URL alone will not put files in the correct layout. Do not run `git reset --hard` over local configuration or data.
+
+To migrate during a maintenance window:
+
+1. Record the current service configuration and actual database, upload, and work paths. Back up the database and `config.yaml`, and preserve any uncommitted application changes. Stop both services before taking a plain file copy of SQLite.
+2. Clone `G33kM0bile/lssk` to a new `/opt/lssk` checkout and give the service account ownership, as in step 3. If that location is already used, inspect it rather than cloning over it.
+3. Preserve the entire old application directory under an unused name such as `/opt/shot-counter.previous`. Verify that the move target does not already exist. This retains the original checkout, local files, and virtual environment for rollback.
+4. Create `/opt/shot-counter` as a symlink to `/opt/lssk/shot-counter`. Copy the preserved `config.yaml` into the new application directory, retaining `root:shot-counter` ownership and mode `640`. Do not add it to Git.
+5. Recreate the Python environment through `/opt/shot-counter/venv` and install dependencies as in step 4. Recreating the environment avoids relying on paths embedded in the moved virtual environment.
+6. Keep SQLite and audio at their existing external paths. If the old configuration stored anything inside the old checkout, restore or repoint those paths deliberately before starting services; do not start against an empty replacement database.
+7. The supplied systemd units still use `/opt/shot-counter`, so their paths remain valid through the symlink. Start both services and verify `/api/status`, existing totals, privacy settings, and upload processing before resuming use.
+
+For rollback, stop both services, remove only the new symlink after verifying that it is a symlink, restore the preserved old directory to `/opt/shot-counter`, and restart. Preserve any new recordings/database changes made since migration. Retain backups until the new deployment has been verified. Future updates use `/opt/lssk` and the updated commands above.
 
 ## Troubleshooting
 

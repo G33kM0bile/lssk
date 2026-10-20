@@ -4,6 +4,8 @@ An offline-first shot-counting proof of concept for shooting ranges. It accepts 
 
 > **Project origin:** This project was initially created for [Lofoten Sportsskytterklubb (LSSK)](https://lssk.no/).
 
+**Source location:** Shot Counter is maintained in [`G33kM0bile/lssk`, under `shot-counter/`](https://github.com/G33kM0bile/lssk/tree/main/shot-counter). It was consolidated from `G33kM0bile/Shot-counter` on 21 October 2026 with its original Git history preserved. The original repository is retained as a historical reference. Existing installations should follow the [migration notes](docs/INSTALL.md#existing-installations-from-the-original-repository) before switching update sources.
+
 ## Features
 
 - SQLite is the local source of truth.
@@ -83,8 +85,8 @@ For a persistent Debian 13 installation, follow the complete [installation guide
 For a local code-level evaluation:
 
 ```bash
-git clone https://github.com/G33kM0bile/Shot-counter.git
-cd Shot-counter
+git clone https://github.com/G33kM0bile/lssk.git
+cd lssk/shot-counter
 sudo apt update
 sudo apt install python3 python3-venv ffmpeg libsndfile1
 python3 -m venv venv

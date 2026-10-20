@@ -6,8 +6,8 @@
 Most of this proof of concept was "vibe coded" with OpenAI Codex and
 ChatGPT, with human direction, review, testing, and deployment.
 
-Project source: https://github.com/G33kM0bile/Shot-counter
-License: MIT; see the LICENSE file in the project repository.
+Project source: https://github.com/G33kM0bile/lssk/tree/main/shot-counter
+License: MIT; see the LICENSE file in the shot-counter directory.
 """
 
 import json
@@ -1527,7 +1527,7 @@ HTML = """
     <div>
         {{ footer_label }} ·
         <a
-            href="https://github.com/G33kM0bile/Shot-counter"
+            href="https://github.com/G33kM0bile/lssk/tree/main/shot-counter"
             target="_blank"
             rel="noopener noreferrer">
             GitHub
