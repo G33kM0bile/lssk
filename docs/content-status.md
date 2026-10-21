@@ -1,6 +1,6 @@
 # Website content and layout status
 
-Updated: 2026-10-20. Changes were made through the signed-in WordPress UI on lssk.no. The active theme and database are not stored in this repository.
+Updated: 2026-10-21. Changes were made through the signed-in WordPress UI on lssk.no. The active theme and database are not stored in this repository.
 
 ## Editing locations
 
@@ -8,7 +8,7 @@ Updated: 2026-10-20. Changes were made through the signed-in WordPress UI on lss
 | --- | --- |
 | Homepage | Elementor page 193 |
 | Training | Service post 3320, classic editor and Firerangers settings |
-| Disciplines | Pages 1109 (NSF, /training/) and 1118 (DSSN, /dssn/), NSF: Elementor HTML widget; DSSN: WordPress custom HTML block; Firerangers banner settings |
+| Disciplines | Pages 1109 (NSF, /training/) and 1118 (DSSN, /dssn/), both maintained in one Elementor HTML widget per page; Firerangers banner settings |
 | Footer | Appearance > Widgets > Footer Widget Four; Footer Four Menu |
 | Responsive adjustments | Appearance > Customize > Additional CSS |
 
@@ -32,7 +32,7 @@ The bottom demo photograph (featured image) was removed from the Training servic
 
 ## Discipline pages
 
-NSF and DSSN pages now use original Norwegian copy, training times, beginner information, club contacts, links to training and official federation resources, and cross-links between disciplines. NSF (page 1109) is now maintained in an Elementor HTML widget containing the complete `.lssk-discipline` markup. Its old Elementor demo events were removed and the replacement published, so opening Elementor no longer reactivates demo content. DSSN (page 1118) was originally replaced in WordPress; avoid reopening its old Elementor layout until it is migrated in the same way.
+NSF and DSSN pages now use original Norwegian copy, training times, beginner information, club contacts, links to training and official federation resources, and cross-links between disciplines. NSF (page 1109) is now maintained in an Elementor HTML widget containing the complete `.lssk-discipline` markup. Its old Elementor demo events were removed and the replacement published, so opening Elementor no longer reactivates demo content. DSSN (page 1118) was migrated on 2026-10-21 using the same approach. Its old Walk in grid and Membership demo containers were removed, and the complete existing Norwegian markup and club photograph were preserved in one Elementor HTML widget. The replacement was published and verified after reopening Elementor. Maintain both discipline pages in Elementor; do not replace their content separately in the WordPress block editor.
 
 The `.lssk-discipline` styles in Additional CSS provide a two-column desktop introduction, single-column mobile layout and training information card. The NSF banner title and the Main Menu label were corrected (NSSF -> NSF). Demo banner images were removed. Existing club photos are temporary; dedicated landscape photos of NSF and DSSN activity are requested to avoid repeating homepage images.
 
@@ -47,4 +47,6 @@ The `.lssk-discipline` styles in Additional CSS provide a two-column desktop int
 
 
 
+
 NSF menu repair: verified the desktop and mobile Grener > NSF link opens /training/ and displays the current content. Mobile menu logo/contact settings are maintained in FIRERANGERS Options > Mobile Sidebar Settings; use Save Changes there for text fields. Additional CSS handles white logo contrast and long email wrapping.
+
