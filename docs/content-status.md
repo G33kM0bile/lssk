@@ -52,3 +52,14 @@ On 2026-10-21 the user approved using the two new club photos in the title banne
 
 Main Menu now uses a custom parent item OM KLUBBEN (5515) with an empty URL. It does not navigate to a page. Its first child Om oss uses page 1197 (/om-oss/), retained as menu item 1220 with a corrected label and parent. Removed old menu item 1221, which pointed to the obsolete /team-members/ demo page. Existing Blog child 1222 is retained. Verified public header markup has no href on OM KLUBBEN and the correct /om-oss/ destination on its child; clicking the parent keeps the current page.
 
+## Mobile banner and course-text correction (2026-10-21)
+
+At the user's request, fixed two issues shown in phone screenshots: the Styremøtereferater banner heading extended outside the viewport, and the home page safety-course text touched the screen edges.
+
+Appended a scoped mobile-only block to Appearance > Customize > Additional CSS (breakpoint 767px). Existing CSS was preserved; the pre-change backup is outputs/additional-css-before-mobile-text-fix.css. The new block is backed up in widgets/mobile-text-fixes.css in the repository and locally in outputs/lssk-mobile-text-fixes.css.
+
+All breadcrumb-style1 page banners now use 52px vertical padding on mobile, 20px horizontal container padding, a fluid 24–30px heading with safe wrapping, and 14px breadcrumbs that can wrap. This covers the long board-minutes title and makes the empty Kalender/Styremøtereferater shells consistent with the completed pages.
+
+Only the homepage #kurs widget gets 20px horizontal padding, a 26–32px heading, and 17px paragraph text with 1.7 line height. Long contact links can wrap. Mobile heading character animations are neutralized inside this widget to prevent transient clipping; desktop animations are retained. Text, links, photographs and desktop styles were not changed.
+
+Published successfully. Customizer mobile preview at 320px confirmed the full Styremøtereferater heading at 24px, heading scroll width equal to its 263px available width, and no page overflow (303px document width). The course widget showed 20px padding, a 26px heading and 17px paragraph text. Screenshot capture timed out; validation used the rendered mobile preview and computed layout.
