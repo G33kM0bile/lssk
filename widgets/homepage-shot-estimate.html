@@ -17,7 +17,7 @@
   </div>
   <div class="lssk-shot-result">
     <span class="lssk-shot-number" data-shot-number>—</span>
-    <span class="lssk-shot-year" data-shot-year>Estimert aktivitet</span>
+    <span class="lssk-shot-year" data-shot-year></span>
   </div>
   <noscript>Slå på JavaScript for å se estimatet.</noscript>
 </section>
@@ -86,10 +86,10 @@
       var value = estimate(Date.now());
       var formatted = numberFormat.format(value.total);
       if (formatted !== previous) {
-        number.textContent = formatted;
+        number.textContent = '≈ ' + formatted;
         previous = formatted;
       }
-      year.textContent = 'Estimert aktivitet · ' + value.year;
+      year.textContent = String(value.year);
     }
     render();
     var interval = setInterval(function () {
