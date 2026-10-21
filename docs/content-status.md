@@ -53,13 +53,3 @@ On 2026-10-21 the user approved using the two new club photos in the title banne
 Contact page 1398 (/contact/) was rebuilt and published on 2026-10-21 as one Elementor HTML widget. The old Contact, Form and Map demo containers, Berlin address/map and demo forms were removed. Title/banner: Kontakt. Uses Header Style 4, Footer Style 4 and the club range photograph IMG_20260508_184728-scaled.jpg, explicitly approved by the user.
 
 The board list was supplied by the user: Kjetil Jørgensen (chair), Jan Rune Hauge (deputy), Ørjan Andre Løvdal (treasurer), Morten Alvestad Pilkvam (range manager), and Petter Hjalmar Langstrand (board member). Kjetil uses the previously confirmed club telephone/email. Other board members show name and office only; no contact details were invented.
-
-Course contacts have separate cards: Mads for general safety courses/trying pistol shooting, phone 970 63 150 and mads-johannessen@hotmail.com; Halvor Odden for DSSN courses, phone +4746669065 and halvoro10@gmail.com (confirmed by the user). Responsive card styling is contained in the same HTML widget. The page also links to the correct Slydalen map and training information. Verified seven contact cards, working tel/mailto targets, one content section, correct header/footer, and a single-column layout in the mobile preview.
-
-The separate old team page 1199 (/team-members/) still contains demo people; it is not a current board directory and remains to be replaced or redirected in later work.
-
-## Remaining work
-
-- Complete other content pages and audit main/header menus: some still point to demo content or #.
-- Main-menu Calendar still points to /our-events/ and should use /events/. Homepage card and Footer Four Menu already use /events/.
-- Privacy page 5461 is published at /personvernerklaering/ and linked from Footer Bottom Menu Two (item 4900). Technical log and backup retention still require review. The adopted ordinary-email retention policy needs manual monthly follow-up.
