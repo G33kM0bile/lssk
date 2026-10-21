@@ -51,3 +51,4 @@ On 2026-10-21 the user approved using the two new club photos in the title banne
 ## Club navigation correction (2026-10-21)
 
 Main Menu now uses a custom parent item OM KLUBBEN (5515) with an empty URL. It does not navigate to a page. Its first child Om oss uses page 1197 (/om-oss/), retained as menu item 1220 with a corrected label and parent. Removed old menu item 1221, which pointed to the obsolete /team-members/ demo page. Existing Blog child 1222 is retained. Verified public header markup has no href on OM KLUBBEN and the correct /om-oss/ destination on its child; clicking the parent keeps the current page.
+
