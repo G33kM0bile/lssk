@@ -1,0 +1,103 @@
+<style>
+.lssk-shot-estimate{max-width:1170px;margin:0 auto 70px;padding:38px 42px;background:#302b1e;color:#fff;display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);align-items:center;gap:28px;border-left:4px solid #b59a58;box-sizing:border-box}
+.lssk-shot-estimate *{box-sizing:border-box}
+.lssk-shot-estimate .lssk-shot-eyebrow{margin:0 0 10px;color:#dac68e;font-size:13px;letter-spacing:.12em;font-weight:600;text-transform:uppercase}
+.lssk-shot-estimate h2{margin:0 0 12px!important;color:#fff!important;font-size:clamp(26px,3vw,36px);line-height:1.2}
+.lssk-shot-estimate .lssk-shot-copy{margin:0;color:#e1ddd3;font-size:16px;line-height:1.65}
+.lssk-shot-estimate .lssk-shot-result{text-align:right;min-width:0}
+.lssk-shot-estimate .lssk-shot-number{display:block;color:#dac68e;font-size:clamp(46px,6vw,76px);font-weight:700;line-height:1.1;font-variant-numeric:tabular-nums;letter-spacing:-.035em;white-space:nowrap}
+.lssk-shot-estimate .lssk-shot-year{display:block;margin-top:8px;color:#e1ddd3;font-size:14px}
+.lssk-shot-estimate .lssk-shot-note{grid-column:1/-1;margin:0;padding-top:18px;border-top:1px solid rgba(255,255,255,.18);color:#d5d0c4;font-size:13px;line-height:1.6}
+@media(max-width:767px){.lssk-shot-estimate{margin:0 15px 42px;padding:26px 22px;grid-template-columns:minmax(0,1fr);gap:20px}.lssk-shot-estimate .lssk-shot-result{text-align:left}.lssk-shot-estimate h2{font-size:28px}.lssk-shot-estimate .lssk-shot-number{font-size:clamp(42px,12vw,60px)}}
+</style>
+<section class="lssk-shot-estimate" data-lssk-shot-estimate aria-label="Anslått skyteaktivitet hittil i år">
+  <div>
+    <p class="lssk-shot-eyebrow">Aktivitet på banen</p>
+    <h2>Skudd avfyrt hittil i år</h2>
+    <p class="lssk-shot-copy">Mange treningskvelder. Mange gode treff.<br>Et lite glimt av aktiviteten i Slydalen.</p>
+  </div>
+  <div class="lssk-shot-result">
+    <span class="lssk-shot-number" data-shot-number>—</span>
+    <span class="lssk-shot-year" data-shot-year>Estimert aktivitet</span>
+  </div>
+  <p class="lssk-shot-note">Et estimat basert på 1 000–2 500 skudd per uke. Telleren øker jevnt gjennom uka og viser ikke registrerte skuddtall.</p>
+  <noscript>Slå på JavaScript for å se estimatet.</noscript>
+</section>
+<script>
+(function () {
+  'use strict';
+  var DAY = 86400000;
+  var clock = new Intl.DateTimeFormat('en-GB', {
+    timeZone: 'Europe/Oslo', year: 'numeric', month: '2-digit', day: '2-digit',
+    hour: '2-digit', minute: '2-digit', second: '2-digit', hourCycle: 'h23'
+  });
+  function parts(time) {
+    var result = {};
+    clock.formatToParts(new Date(time)).forEach(function (part) {
+      if (part.type !== 'literal') result[part.type] = Number(part.value);
+    });
+    return result;
+  }
+  // Convert an Oslo calendar midnight to UTC, including daylight saving time.
+  function midnight(civil) {
+    var target = civil.getTime();
+    var guess = target;
+    for (var i = 0; i < 3; i++) {
+      var p = parts(guess);
+      var wall = Date.UTC(p.year, p.month - 1, p.day, p.hour, p.minute, p.second);
+      guess += target - wall;
+    }
+    return guess;
+  }
+  // A stable pseudo-random target for each Monday; identical for all visitors.
+  function weeklyTarget(monday) {
+    var key = 'lssk-shot-estimate-v1|' + monday.toISOString().slice(0, 10);
+    var hash = 2166136261;
+    for (var i = 0; i < key.length; i++) {
+      hash ^= key.charCodeAt(i);
+      hash = Math.imul(hash, 16777619) >>> 0;
+    }
+    return 1000 + hash % 1501;
+  }
+  function estimate(now) {
+    var year = parts(now).year;
+    var firstDay = new Date(Date.UTC(year, 0, 1));
+    var yearStart = midnight(firstDay);
+    var yearEnd = midnight(new Date(Date.UTC(year + 1, 0, 1)));
+    var monday = new Date(firstDay.getTime() - ((firstDay.getUTCDay() + 6) % 7) * DAY);
+    var sum = 0;
+    for (var i = 0; i < 54; i++) {
+      var following = new Date(monday.getTime() + 7 * DAY);
+      var start = midnight(monday);
+      var end = midnight(following);
+      if (start >= now || start >= yearEnd) break;
+      var elapsed = Math.max(0, Math.min(now, end, yearEnd) - Math.max(start, yearStart));
+      sum += weeklyTarget(monday) * elapsed / (end - start);
+      monday = following;
+    }
+    return { year: year, total: Math.floor(sum) };
+  }
+  var numberFormat = new Intl.NumberFormat('nb-NO');
+  document.querySelectorAll('[data-lssk-shot-estimate]').forEach(function (root) {
+    if (root.dataset.shotReady) return;
+    root.dataset.shotReady = 'true';
+    var number = root.querySelector('[data-shot-number]');
+    var year = root.querySelector('[data-shot-year]');
+    var previous = '';
+    function render() {
+      var value = estimate(Date.now());
+      var formatted = numberFormat.format(value.total);
+      if (formatted !== previous) {
+        number.textContent = formatted;
+        previous = formatted;
+      }
+      year.textContent = 'Estimert aktivitet · ' + value.year;
+    }
+    render();
+    var interval = setInterval(function () {
+      if (!root.isConnected) { clearInterval(interval); return; }
+      render();
+    }, 15000);
+  });
+}());
+</script>
