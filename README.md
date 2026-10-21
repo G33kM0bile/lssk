@@ -21,6 +21,8 @@ This repository contains documentation, non-sensitive configuration notes, custo
 
 ## Documentation
 
+[Documentation index](docs/README.md) — guides for website editing, environments, operations, and club applications.
+
 - [Architecture](docs/architecture.md)
 - [Production](docs/production.md)
 - [Development](docs/development.md)
