@@ -51,15 +51,3 @@ On 2026-10-21 the user approved using the two new club photos in the title banne
 ## Club navigation correction (2026-10-21)
 
 Main Menu now uses a custom parent item OM KLUBBEN (5515) with an empty URL. It does not navigate to a page. Its first child Om oss uses page 1197 (/om-oss/), retained as menu item 1220 with a corrected label and parent. Removed old menu item 1221, which pointed to the obsolete /team-members/ demo page. Existing Blog child 1222 is retained. Verified public header markup has no href on OM KLUBBEN and the correct /om-oss/ destination on its child; clicking the parent keeps the current page.
-
-## Homepage shot estimate (2026-10-21)
-
-Published a separate Elementor HTML widget on homepage 193, after the safety-course section and before the footer. Widget ID e118d3c, container 6503da1. Its CSS, HTML and JavaScript maintenance copy is in widgets/homepage-shot-estimate.html in the repository; the live source of truth is still this WordPress widget. A local copy is in outputs/lssk-shot-estimate.html.
-
-The card uses the club's brown/gold palette and explicitly labels the number as estimated activity, based on 1,000–2,500 shots per week, not recorded shot statistics. It is independent of the repository's separate shot-counter measurement application and makes no network requests, stores no visitor information and requires no cron task or new plugin.
-
-Each Monday is assigned an inclusive 1,000–2,500 target using a stable pseudo-random hash of its calendar date and seed lssk-shot-estimate-v1. Every visitor gets the same target; page refreshes do not change the total. The annual total sums completed weeks and a linear fraction of the current week. Weeks begin Monday at midnight in Europe/Oslo and use actual elapsed time, including 167/169-hour daylight-saving transition weeks. The partial week at New Year contributes only the time inside that calendar year; the year total resets at Oslo midnight on 1 January. Preserve the seed and algorithm to avoid rewriting the displayed history.
-
-The display refreshes every 15 seconds; the integer naturally increases about once every 4–10 minutes. There is no rapid count-up animation or audible effect. If JavaScript is disabled, it shows a dash and a short explanation rather than a fabricated static total. The timer is disposed when its widget is removed from the DOM.
-
-Validation: the standalone Node checks in outputs/test-shot-estimate.cjs passed weekly range/stability, full-week totals, DST continuity, year boundaries for 2024–2030 and consistency across visitor time zones. Elementor mobile preview at 360px showed a single column with the number contained inside the card (card width about 293px). Verified one functioning widget on the published home page. Desktop and mobile screenshots are saved locally as outputs/lssk-skuddteller-publisert-2026-10-21.png and outputs/lssk-skuddteller-mobil-2026-10-21.png.
