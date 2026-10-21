@@ -52,6 +52,73 @@ On 2026-10-21 the user approved using the two new club photos in the title banne
 
 Main Menu now uses a custom parent item OM KLUBBEN (5515) with an empty URL. It does not navigate to a page. Its first child Om oss uses page 1197 (/om-oss/), retained as menu item 1220 with a corrected label and parent. Removed old menu item 1221, which pointed to the obsolete /team-members/ demo page. Existing Blog child 1222 is retained. Verified public header markup has no href on OM KLUBBEN and the correct /om-oss/ destination on its child; clicking the parent keeps the current page.
 
+## Calendar shell and board minutes (2026-10-21)
+
+At the user's request, cleared only the visible calendar page shell while another person works on calendar functionality. Page 5197 remains at /our-events/ (the existing Main Menu destination), renamed Kalender. Removed its entire Events demo container in Elementor and published the empty layout. This removes the English demo event cards and prices. Set Header Style 4, Footer Style 4, banner title Kalender, and original club photo IMG_20260508_184728-scaled.jpg through the page's Firerangers settings. No event records, calendar plugin settings, or /events/ functionality were changed. Main Menu still points to /our-events/; footer still points to /events/. The calendar implementer should reconcile these destinations when ready.
+
+The Main Menu Blog child 1222 had only a # placeholder and no page destination. Created a clean, empty standard WordPress page 5517, Styremøtereferater, at https://lssk.no/styremotereferater/. It uses Header Style 4, Footer Style 4, one-column layout, and the same club banner photograph. No minutes or placeholder articles were added. Menu item 1222 is now labelled Styremøtereferater and links to the new page under OM KLUBBEN. Existing unrelated demo blog/archive pages and posts were not modified.
+
+Verified public page titles, club header/footer, banner image URL, absence of demo event content, and the new submenu destination. Browser screenshots could not be saved because the screenshot command timed out; verification used rendered page DOM. Maintain page 5197's content in Elementor and page 5517's empty content in the standard WordPress editor until the future content workflow is chosen.
+
+## Contact page
+
+Contact page 1398 (/contact/) was rebuilt and published on 2026-10-21 as one Elementor HTML widget. The old Contact, Form and Map demo containers, Berlin address/map and demo forms were removed. Title/banner: Kontakt. Uses Header Style 4, Footer Style 4 and the club range photograph IMG_20260508_184728-scaled.jpg, explicitly approved by the user.
+
+The board list was supplied by the user: Kjetil Jørgensen (chair), Jan Rune Hauge (deputy), Ørjan Andre Løvdal (treasurer), Morten Alvestad Pilkvam (range manager), and Petter Hjalmar Langstrand (board member). Kjetil uses the previously confirmed club telephone/email. Other board members show name and office only; no contact details were invented. Course cards identify Mads for general safety courses and trying pistol shooting, and Halvor Odden for DSSN courses.
+
+## About page
+
+Page 1197 (/om-oss/) uses one Elementor HTML widget with Norwegian club copy, values, NSF/DSSN training information, membership/contact/map links and original club photographs. Old Welcome, gallery, Why Choose Us, Team Grid and Achivements demo containers were removed. Header Style 4 and Footer Style 4 are retained. The banner uses IMG_20260508_184728-scaled.jpg through page-scoped CSS in the HTML widget. Historical research is saved locally in docs/history-research.md; no history was added to the public page.
+
+## Completed navigation and URL cleanup (2026-10-21)
+
+This section supersedes older URL and contact descriptions above.
+
+| Page | WordPress ID | Current URL | Editor |
+| --- | --- | --- | --- |
+| NSF | 1109 | /nsf/ | One Elementor HTML widget |
+| DSSN | 1118 | /dssn/ | One Elementor HTML widget |
+| Trening | 3320 | /service/trening/ | Classic service editor |
+| Kontakt | 1398 | /kontakt/ | One Elementor HTML widget |
+| Om oss | 1197 | /om-oss/ | One Elementor HTML widget |
+| Kalender shell | 5197 | /kalender/ | Empty Elementor layout |
+| Styremøtereferater | 5517 | /styremotereferater/ | Empty standard page |
+| Personvern | 5461 | /personvernerklaering/ | Existing page |
+
+Header Menu 70: Medlemskap now links to https://www.minidrett.no/medlemskap/27827. Removed empty Nyheter, Galleri and Spørsmål og svar menu items. Main Menu 71 and Footer Four Menu 66 now use /kalender/. Elementor's Replace URL tool updated exact full-address references to /contact/, /training/, /service/range-services/, /our-events/ and /events/ in Elementor data. Training classic content was updated separately. No domain or site-address settings were changed.
+
+The /service/ prefix is retained to preserve the Training post type and design. The Events Calendar archive at /events/ remains available with its original functions and settings. No event data, API keys or calendar plugin settings were changed. The other calendar implementer should use /kalender/ as the public landing page. No redirect was added for /events/ because that would interfere with the calendar application.
+
+Installed and activated Redirection 5.10.1 by John Godley from the official WordPress plugin directory, because the old page URLs returned 404 after slug changes. Four enabled 301 redirects map /contact/ to /kontakt/, /training/ to /nsf/, /our-events/ to /kalender/, and /service/range-services/ to /service/trening/. Verified all four by navigating to the old addresses and checking the resulting URL. Permalink-change monitoring is enabled; optional redirect/404 logging and IP storage were not enabled.
+
+DSSN page 1118 now names Halvor Odden as DSSN-course instructor, phone +47 466 69 065, email halvoro10@gmail.com. Mads remains responsible for general safety-course enquiries and trying pistol shooting. Kjetil remains the general club contact in header/footer and board section.
+
+Confirmed demo content was set to Draft and never permanently deleted:
+
+- 18 Pages: 1392, 1217, 1201, 1203, 1205, 2066, 2068, 2070, 1207, 1208, 1209, 974, 976, 1199, 5363, 1214, 5274, 1187.
+- 19 demo Posts: 5108, 5107, 5105, 3357, 3356, 3355, 3354, 3353, 3352, 2981, 2980, 2979, 2978, 2977, 2976, 2975, 2974, 2973, 2972.
+- Five demo Services: 3324, 3323, 3322, 3321, 5219. Trening 3320 remains published.
+- Six legacy Team templates, including the old Mads template with an English demo layout and demo contact details. His real contact card remains on Kontakt.
+- 37 imported Project/gallery entries. Their media attachments and original club photos were not removed or changed.
+
+The obsolete List view 01 was unassigned as the WordPress Posts page before drafting it. Homepage 193 remains assigned. WooCommerce and ticket/calendar system pages are retained.
+
+Validation: all seven principal content pages opened with expected titles, no broken visible images and no old-address links outside the admin toolbar. The home page also has no such old links. Customizer mobile preview confirmed Om klubben opens Om oss and Styremøtereferater, and showed no horizontal overflow on the home page (320px viewport, 303px document width). Desktop screenshot saved locally as outputs/lssk-opprydding-2026-10-21.png. A separate mobile screenshot timed out; mobile behaviour was checked in the rendered preview.
+
+New beginner guidance, membership prices, range rules and public history remain deferred at the user's request.
+
+## Homepage shot estimate (2026-10-21)
+
+Published a separate Elementor HTML widget on homepage 193, after the safety-course section and before the footer. Widget ID e118d3c, container 6503da1. Its CSS, HTML and JavaScript maintenance copy is in widgets/homepage-shot-estimate.html in the repository; the live source of truth is still this WordPress widget. A local copy is in outputs/lssk-shot-estimate.html.
+
+The card uses the club's brown/gold palette. The user requested removing both the bottom explanation and the words Estimert aktivitet. The current compact display uses an approximation sign (≈) before the number and only the year beneath it; its accessible section label still identifies the value as an estimate. It is based on 1,000–2,500 shots per week, not recorded shot statistics. The calculation and update interval are unchanged. It is independent of the repository's separate shot-counter measurement application and makes no network requests, stores no visitor information and requires no cron task or new plugin.
+
+Each Monday is assigned an inclusive 1,000–2,500 target using a stable pseudo-random hash of its calendar date and seed lssk-shot-estimate-v1. Every visitor gets the same target; page refreshes do not change the total. The annual total sums completed weeks and a linear fraction of the current week. Weeks begin Monday at midnight in Europe/Oslo and use actual elapsed time, including 167/169-hour daylight-saving transition weeks. The partial week at New Year contributes only the time inside that calendar year; the year total resets at Oslo midnight on 1 January. Preserve the seed and algorithm to avoid rewriting the displayed history.
+
+The display refreshes every 15 seconds; the integer naturally increases about once every 4–10 minutes. There is no rapid count-up animation or audible effect. If JavaScript is disabled, it shows a dash and a short explanation rather than a fabricated static total. The timer is disposed when its widget is removed from the DOM.
+
+Validation: the standalone Node checks in outputs/test-shot-estimate.cjs passed weekly range/stability, full-week totals, DST continuity, year boundaries for 2024–2030 and consistency across visitor time zones. Elementor mobile preview at 360px showed a single column with the number contained inside the card (card width about 293px). Verified one functioning widget on the published home page. Desktop and mobile screenshots are saved locally as outputs/lssk-skuddteller-publisert-2026-10-21.png and outputs/lssk-skuddteller-mobil-2026-10-21.png.
+
 ## Mobile banner and course-text correction (2026-10-21)
 
 At the user's request, fixed two issues shown in phone screenshots: the Styremøtereferater banner heading extended outside the viewport, and the home page safety-course text touched the screen edges.
