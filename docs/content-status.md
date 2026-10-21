@@ -36,6 +36,10 @@ NSF and DSSN pages now use original Norwegian copy, training times, beginner inf
 
 The `.lssk-discipline` styles in Additional CSS provide a two-column desktop introduction, single-column mobile layout and training information card. The NSF banner title and the Main Menu label were corrected (NSSF -> NSF). Demo banner images were removed. Existing club photos are temporary; dedicated landscape photos of NSF and DSSN activity are requested to avoid repeating homepage images.
 
+## Course and beginner contact
+
+Mads is the contact for general safety courses and visitors who want to try pistol shooting (confirmed by the user on 2026-10-21): phone 970 63 150, email mads-johannessen@hotmail.com. Updated homepage page 193 (beginner slider, beginner card, course card, and safety-course/club-firearm section), Training service 3320, and NSF page 1109. Telephone and email links use Mads’s contact details. DSSN page 1118 also identifies Mads for general safety courses and trying pistol shooting; Kjetil remains its contact for dynamic shooting/IPSC. General club header/footer contacts remain unchanged. Preserve this distinction in future edits.
+
 ## Remaining work
 
 - Complete other content pages and audit main/header menus: some still point to demo content or #.
@@ -48,5 +52,7 @@ The `.lssk-discipline` styles in Additional CSS provide a two-column desktop int
 
 
 
+
 NSF menu repair: verified the desktop and mobile Grener > NSF link opens /training/ and displays the current content. Mobile menu logo/contact settings are maintained in FIRERANGERS Options > Mobile Sidebar Settings; use Save Changes there for text fields. Additional CSS handles white logo contrast and long email wrapping.
+
 
