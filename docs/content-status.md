@@ -44,22 +44,12 @@ Mads is the contact for general safety courses and visitors who want to try pist
 
 On 2026-10-21, two original club photos were added: attachment 5488 / 20260820_194724-scaled.jpg shows standplass 7 and the pistol targets; attachment 5495 / 20260820_194745-scaled.jpg shows the inside of the standplass building. The first replaces the NSF introduction photo in its existing Elementor HTML widget and 4:3 layout. The second is an inline, uncropped portrait figure (maximum width 360px, shrinking on smaller screens) near the location section of Training service 3320; it links to the full-size image. Both have descriptive alt text and captions. Existing course contact details and club design are preserved.
 
+## Photo banners for NSF and Training
+
+On 2026-10-21 the user approved using the two new club photos in the title banners. Additional CSS now overrides the banner background for NSF page 1109 with 20260820_194724-scaled.jpg (center 50%) and Training service 3320 with 20260820_194745-scaled.jpg (center 45%). Both use cover sizing and a dark rgba(25,22,16,.58) overlay with white title text. This overrides the previous NSF background-image:none rule. The WordPress banner metadata is unchanged; maintain these two banner images and their crop positions in Appearance > Customize > Additional CSS. Other pages retain their current banners.
+
 ## Remaining work
 
 - Complete other content pages and audit main/header menus: some still point to demo content or #.
 - Main-menu Calendar still points to /our-events/ and should use /events/. Homepage card and Footer Four Menu already use /events/.
 - Privacy page 5461 is published at /personvernerklaering/ and linked from Footer Bottom Menu Two (item 4900). Technical log and backup retention still require review. The adopted ordinary-email retention policy needs manual monthly follow-up.
-- Calendar currently has no upcoming events.
-- Recheck real-device mobile appearance after future theme/header changes.
-- Consider moving page-specific CSS and Service markup into the child theme during later code maintenance.
-
-
-
-
-
-
-
-NSF menu repair: verified the desktop and mobile Grener > NSF link opens /training/ and displays the current content. Mobile menu logo/contact settings are maintained in FIRERANGERS Options > Mobile Sidebar Settings; use Save Changes there for text fields. Additional CSS handles white logo contrast and long email wrapping.
-
-
-
