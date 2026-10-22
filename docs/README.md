@@ -23,6 +23,11 @@ Documentation for the Lofoten Sportsskytterklubb website and club applications.
 | [Plugins](plugins.md) | Plugin roles, custom integrations, administration tools, and potential additions. |
 | [Operations](operations.md) | Apache checks, WP-CLI commands, reverse-proxy diagnostics, backups, and crawler settings. |
 
+## Website features
+
+- [Homepage sponsor presentation](homepage-sponsors.md) — sponsor invitations, responsive spotlight, moving logos, drag/touch behavior and maintenance source.
+- [Social sharing previews](social-sharing.md) — Open Graph/Twitter configuration and the standplass 7 sharing photograph.
+
 ## Calendar integration
 
 - [Shoot'n Score It synchronization](ssi-sync.md) — integration overview, deployment steps, and synchronization behavior.
