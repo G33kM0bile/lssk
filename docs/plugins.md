@@ -8,6 +8,8 @@ This file documents the purpose of notable plugins. Update it when the stack cha
 - **The Events Calendar** — club events/calendar functionality.
 - **WooCommerce** — installed as a theme dependency/supporting plugin; not used as an online shop.
 
+- **Open Graph and Twitter Card Tags 3.5.2** — sharing titles, descriptions and club photograph; [configuration](social-sharing.md).
+
 ## Custom integrations
 
 - **LSSK SSI Sync** — imports public Shoot'n Score It organization 60 events into The Events Calendar. Version 0.1.0 is available in this repository; deployment and live SSI authentication are still pending. Defaults to preview/manual operation and draft imports, with optional hourly sync and publishing.
