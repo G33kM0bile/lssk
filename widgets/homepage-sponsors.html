@@ -1,0 +1,172 @@
+<!-- LSSK sponsorinvitasjon. Klubbens logo er midlertidig. Erstatt paneler og de tre opprinnelige logoknappene med bekreftede sponsorer når de finnes. -->
+<style>
+.elementor-element-ada784f:has(#lssk-sponsors[hidden]){display:none!important}
+body.elementor-editor-active .elementor-element-ada784f:has(#lssk-sponsors[hidden]){display:flex!important}
+#lssk-sponsors[hidden]{display:none!important}
+body.elementor-editor-active #lssk-sponsors[hidden]{display:block!important}
+#lssk-sponsors{--gold:#bba066;--cream:#f5f1e8;--ink:#28271f;max-width:1170px;width:100%;box-sizing:border-box;margin:0 auto 70px;padding:clamp(24px,4vw,48px);background:var(--cream);color:var(--ink);border-top:3px solid var(--gold);font-family:Figtree,Arial,sans-serif}
+#lssk-sponsors *{box-sizing:border-box}
+#lssk-sponsors button{font:inherit;cursor:pointer}
+#lssk-sponsors .ls-draft{margin:0 0 24px;font:12px/1.6 Arial,sans-serif;color:#715e34;border:1px dashed var(--gold);padding:10px 14px}
+#lssk-sponsors .ls-eyebrow{margin:0 0 10px;color:#75602c;text-transform:uppercase;letter-spacing:.18em;font:600 12px/1.6 Arial,sans-serif}
+#lssk-sponsors h2{font-size:clamp(30px,4vw,46px);line-height:1.12;letter-spacing:-.02em;margin:0 0 16px;color:var(--ink);text-transform:none}
+#lssk-sponsors .ls-intro{margin:0 0 28px;max-width:650px;color:#625d51;font-size:16px;line-height:1.7}
+#lssk-sponsors .ls-stage{position:relative;background:#242a27;color:#f5f1e8;overflow:hidden;border:1px solid #464b3e;touch-action:pan-y}
+#lssk-sponsors .ls-panel{display:grid;grid-template-columns:1fr 1fr;min-height:340px}
+#lssk-sponsors .ls-panel[hidden]{display:none!important}
+#lssk-sponsors .ls-visual{position:relative;min-height:340px;display:grid;place-items:center;background:radial-gradient(ellipse at center,#495044 0,#292f29 65%);isolation:isolate;overflow:hidden}
+#lssk-sponsors .ls-reticle{position:absolute;width:278px;aspect-ratio:1;border:1px solid #bba06655;border-radius:50%;box-shadow:0 0 0 38px #bba06609,0 0 0 39px #bba06622,0 0 0 77px #bba06606,0 0 0 78px #bba06616;pointer-events:none}
+#lssk-sponsors .ls-reticle:before,#lssk-sponsors .ls-reticle:after{content:"";position:absolute;background:#bba06655}
+#lssk-sponsors .ls-reticle:before{height:1px;left:-80px;right:-80px;top:50%}
+#lssk-sponsors .ls-reticle:after{width:1px;top:-80px;bottom:-80px;left:50%}
+#lssk-sponsors .ls-logo{position:relative;z-index:1;width:210px;min-height:106px;padding:20px;display:grid;place-content:center;background:#faf8f1;color:#373b32;text-align:center;border:1px solid #d8cfb5;box-shadow:0 14px 35px #0003;transform:rotate(-3deg)}
+#lssk-sponsors .ls-logo strong{font:700 27px/1.2 Arial,sans-serif;letter-spacing:.1em}
+#lssk-sponsors .ls-logo small{font:11px/1.6 Arial,sans-serif;letter-spacing:.15em;text-transform:uppercase;margin-top:8px;color:#71664d}
+#lssk-sponsors .ls-logo img{width:100%;height:85px;object-fit:contain}
+#lssk-sponsors .ls-lock{position:absolute;left:22px;top:22px;display:flex;align-items:center;gap:9px;font:600 10px/1.6 Arial,sans-serif;letter-spacing:.16em;color:#e7ddc6}
+#lssk-sponsors .ls-red-dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:#ee635b;box-shadow:0 0 0 4px #ee635b1f;animation:ls-dot 3s ease-in-out infinite}
+#lssk-sponsors .ls-coordinates{position:absolute;bottom:18px;left:22px;right:22px;display:flex;justify-content:space-between;color:#ccc3ae;font:10px/1.5 monospace;letter-spacing:.1em}
+#lssk-sponsors .ls-copy{padding:clamp(26px,4vw,46px);display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:18px;position:relative}
+#lssk-sponsors .ls-copy:after{content:"+";position:absolute;right:18px;top:9px;color:#bba06677;font:24px monospace}
+#lssk-sponsors .ls-tag{color:#d0bb8b;font:600 11px/1.5 Arial,sans-serif;letter-spacing:.16em;text-transform:uppercase}
+#lssk-sponsors h3{margin:0;color:#faf6ec;font-size:clamp(26px,3.3vw,36px);line-height:1.15;text-transform:none;letter-spacing:-.015em}
+#lssk-sponsors .ls-copy p{margin:0;color:#dbded4;font-size:16px;line-height:1.7}
+#lssk-sponsors .ls-copy a{color:#f2dfac;border-bottom:1px solid #bba066;font-size:14px;text-decoration:none;padding-bottom:5px}
+#lssk-sponsors .ls-impact{position:absolute;width:70px;aspect-ratio:1;border:1px solid #cbb47a;border-radius:50%;top:50%;left:50%;pointer-events:none;opacity:0}
+#lssk-sponsors .ls-panel.is-hit .ls-impact{animation:ls-hit 850ms ease-out}
+#lssk-sponsors .ls-panel.is-hit .ls-logo{animation:ls-arrive 500ms ease-out}
+#lssk-sponsors .ls-controls{display:flex;align-items:center;justify-content:space-between;gap:15px;margin:16px 0 0}
+#lssk-sponsors .ls-hint{font-size:12px;color:#665d4b;line-height:1.5;margin:0}
+#lssk-sponsors .ls-mobile-hint{display:none}
+#lssk-sponsors .ls-tools{display:flex;align-items:center;gap:8px}
+#lssk-sponsors .ls-control{display:grid;place-items:center;border:1px solid #c8b994;background:transparent;color:#403b2e;width:42px;height:42px;border-radius:50%;padding:0;font-size:18px}
+#lssk-sponsors .ls-control:hover{background:#e7dfcf}
+#lssk-sponsors .ls-count{font:12px/1.5 monospace;min-width:52px;text-align:center;color:#675a3e}
+#lssk-sponsors .ls-choices{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:18px}
+#lssk-sponsors .ls-choice{position:relative;min-width:0;display:flex;align-items:center;justify-content:center;gap:12px;background:#fff;border:1px solid #ded8ca;padding:18px 10px;min-height:70px;color:#696152;transition:border-color .2s,background .2s}
+#lssk-sponsors .ls-choice[aria-pressed="true"]{border-color:#8d753e;background:#eee6d5;color:#383326}
+#lssk-sponsors .ls-choice:before{content:"";position:absolute;left:50%;bottom:-5px;width:8px;height:8px;background:#a18b50;border-radius:50%;opacity:0;transform:translateX(-50%)}
+#lssk-sponsors .ls-choice[aria-pressed="true"]:before{opacity:1}
+#lssk-sponsors .ls-choice span{font:700 13px/1.3 Arial,sans-serif;letter-spacing:.05em}
+#lssk-sponsors .ls-choice small{font:11px/1.3 monospace;opacity:.75}
+#lssk-sponsors .ls-choice img{max-width:130px;width:100%;height:45px;object-fit:contain}
+#lssk-sponsors .ls-footer{display:flex;justify-content:space-between;align-items:center;gap:18px;margin-top:30px;padding-top:24px;border-top:1px solid #dbd2bf}
+#lssk-sponsors .ls-footer p{margin:0;font-size:16px;line-height:1.5}
+#lssk-sponsors .ls-footer a{display:inline-flex;gap:22px;color:#403a2c;font:600 14px/1.6 Arial,sans-serif;text-decoration:none;border-bottom:2px solid #bba066;padding:7px 0}
+#lssk-sponsors :is(a,button):focus-visible{outline:3px solid #b4964d;outline-offset:4px}
+@keyframes ls-dot{50%{box-shadow:0 0 0 7px #ee635b10}}
+@keyframes ls-hit{0%{opacity:.65;transform:translate(-50%,-50%) scale(.3)}100%{opacity:0;transform:translate(-50%,-50%) scale(4.3)}}
+@keyframes ls-arrive{from{opacity:.2;transform:rotate(0) scale(.94)}to{opacity:1;transform:rotate(-3deg) scale(1)}}
+@media(max-width:767px){#lssk-sponsors{margin-bottom:40px;padding:24px 18px}#lssk-sponsors .ls-panel{grid-template-columns:1fr}#lssk-sponsors .ls-visual{min-height:245px}#lssk-sponsors .ls-reticle{width:205px}#lssk-sponsors .ls-logo{width:185px;min-height:94px}#lssk-sponsors .ls-logo strong{font-size:23px}#lssk-sponsors .ls-copy{padding:26px 22px;gap:14px;min-height:230px}#lssk-sponsors .ls-copy p{font-size:15px}#lssk-sponsors .ls-desktop-hint{display:none}#lssk-sponsors .ls-mobile-hint{display:inline}#lssk-sponsors .ls-controls{gap:8px}#lssk-sponsors .ls-tools{gap:5px}#lssk-sponsors .ls-control{width:36px;height:36px}#lssk-sponsors .ls-count{min-width:40px;font-size:10px}#lssk-sponsors .ls-choices{gap:8px}#lssk-sponsors .ls-choice{padding:14px 4px;flex-direction:column;gap:5px}#lssk-sponsors .ls-choice span{font-size:10px}#lssk-sponsors .ls-footer{align-items:flex-start;flex-direction:column}}
+@media(prefers-reduced-motion:reduce){#lssk-sponsors *,#lssk-sponsors *:before{animation:none!important;transition:none!important}}
+
+/* Kompakt logostripe. Den andre identiske gruppen gir en sømløs løkke. */
+#lssk-sponsors .ls-navigation{display:flex;align-items:center;gap:12px;margin-top:10px;border-bottom:1px solid #dbd2bf;padding-bottom:10px}
+#lssk-sponsors .ls-marquee{flex:1;min-width:0;overflow:hidden;padding:5px 3px;mask-image:linear-gradient(to right,transparent,#000 12px,#000 calc(100% - 12px),transparent)}
+#lssk-sponsors .ls-track{display:flex;width:max-content}
+#lssk-sponsors.is-ready .ls-track{animation:ls-drift 36s linear infinite}
+#lssk-sponsors.is-paused .ls-track,#lssk-sponsors:focus-within .ls-track{animation-play-state:paused}
+#lssk-sponsors .ls-choices{display:flex;flex:0 0 auto;min-width:0;gap:8px;justify-content:flex-start;margin:0;padding:0 8px 0 0}
+#lssk-sponsors .ls-choice{flex:0 0 84px;min-height:54px;height:54px;padding:7px 5px;gap:0;border:1px solid transparent;background:transparent;border-radius:3px;transition:background .2s,border-color .2s}
+#lssk-sponsors .ls-choice[aria-pressed="true"]{border-color:#bba06688;background:#e8dfcc88}
+#lssk-sponsors .ls-choice:before{display:none}
+#lssk-sponsors .ls-choice img{width:76px;max-width:100%;height:38px}
+#lssk-sponsors .ls-choice small{display:none}
+#lssk-sponsors .ls-tools{flex-shrink:0}
+#lssk-sponsors .ls-tools>[hidden]{display:none!important}
+#lssk-sponsors .ls-pause{width:30px;height:30px;font-size:13px;border-color:#c8b99499}
+#lssk-sponsors .ls-footer{margin-top:0;padding-top:13px;gap:12px}
+#lssk-sponsors .ls-footer p{font-size:14px}
+#lssk-sponsors .ls-footer a{font-size:13px;padding:3px 0;gap:10px;white-space:nowrap}
+@keyframes ls-drift{to{transform:translateX(-50%)}}
+@media(max-width:767px){#lssk-sponsors .ls-choice{flex-basis:84px;padding:7px 5px;min-height:50px;height:50px}#lssk-sponsors .ls-choices{gap:8px;padding-right:8px}#lssk-sponsors .ls-choice img{width:68px;height:36px}#lssk-sponsors .ls-navigation{gap:7px;padding-bottom:8px;margin-top:6px}#lssk-sponsors .ls-footer{flex-direction:row;align-items:center;gap:8px}#lssk-sponsors .ls-footer p{font-size:12px;max-width:175px}#lssk-sponsors .ls-footer a{font-size:12px}}
+@media(prefers-reduced-motion:reduce){#lssk-sponsors .ls-track{animation:none!important;transform:none!important}#lssk-sponsors .ls-marquee{overflow-x:auto;mask-image:none}#lssk-sponsors .ls-copy-set,#lssk-sponsors .ls-filler{display:none}}
+
+/* Ekte scrolling: nettleseren håndterer berøring, musen bruker drahåndtak. */
+#lssk-sponsors .ls-marquee{overflow-x:auto;overflow-y:hidden;scrollbar-width:none;touch-action:pan-x pan-y;cursor:grab;user-select:none;-webkit-user-select:none;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;scroll-behavior:auto;overflow-anchor:none}
+#lssk-sponsors .ls-marquee::-webkit-scrollbar{display:none}
+#lssk-sponsors .ls-marquee.is-dragging,#lssk-sponsors .ls-marquee.is-dragging button{cursor:grabbing}
+#lssk-sponsors .ls-marquee img{-webkit-user-drag:none;pointer-events:none}
+#lssk-sponsors.is-ready .ls-track{animation:none!important;transform:none!important}
+#lssk-sponsors .ls-choice{touch-action:pan-x pan-y}
+@media(prefers-reduced-motion:reduce){#lssk-sponsors .ls-marquee{mask-image:none}}
+</style>
+<section id="lssk-sponsors" aria-labelledby="ls-title" aria-roledescription="karusell">
+ <p class="ls-eyebrow">Bli en støttespiller</p>
+ <h2 id="ls-title">Gode støttespillere.<br>Midt i blinken.</h2>
+ <p class="ls-intro">Vil din bedrift være med på laget? Vi ønsker kontakt med bedrifter som vil støtte skytegleden og klubbmiljøet i Slydalen.</p>
+ <div class="ls-stage" aria-label="Sponsorpresentasjoner">
+  <article class="ls-panel" role="group" aria-roledescription="lysbilde" aria-label="1 av 3 – Lokalt engasjement">
+   <div class="ls-visual" aria-hidden="true"><div class="ls-reticle"></div><div class="ls-lock"><i class="ls-red-dot"></i> I SIKTET</div><div class="ls-logo"><img src="https://lssk.no/wp-content/uploads/2026/08/LSK-Logo.svg" alt="Lofoten Sportsskytterklubb" width="210" height="106"><small>Lofoten</small></div><div class="ls-impact"></div><div class="ls-coordinates"><span>LSSK / SLYDALEN</span><span>01 — 03</span></div></div>
+   <div class="ls-copy"><span class="ls-tag">Din bedrift i siktet</span><h3>Lokalt engasjement.<br>Gode treff.</h3><p>Bli en støttespiller for Lofoten Sportsskytterklubb. Her kan din bedrift bli synlig med logo, en kort presentasjon og lenke til nettsiden deres.</p><a href="/kontakt/">Din bedrift her? Ta kontakt ↗</a></div>
+  </article>
+  <article class="ls-panel" role="group" aria-roledescription="lysbilde" aria-label="2 av 3 – Rom for flere gode treff" hidden>
+   <div class="ls-visual" aria-hidden="true"><div class="ls-reticle"></div><div class="ls-lock"><i class="ls-red-dot"></i> I SIKTET</div><div class="ls-logo"><img src="https://lssk.no/wp-content/uploads/2026/08/LSK-Logo.svg" alt="Lofoten Sportsskytterklubb" width="210" height="106"><small>Lofoten</small></div><div class="ls-impact"></div><div class="ls-coordinates"><span>LSSK / SLYDALEN</span><span>02 — 03</span></div></div>
+   <div class="ls-copy"><span class="ls-tag">Din bedrift i siktet</span><h3>Rom for flere<br>gode treff.</h3><p>Vi samler nye og erfarne skyttere til trening, mestring og fellesskap. Vil din bedrift bidra til aktiviteten? Ta kontakt, så finner vi en løsning sammen.</p><a href="/kontakt/">Snakk med oss om støtte ↗</a></div>
+  </article>
+  <article class="ls-panel" role="group" aria-roledescription="lysbilde" aria-label="3 av 3 – Sammen om treningskvelden" hidden>
+   <div class="ls-visual" aria-hidden="true"><div class="ls-reticle"></div><div class="ls-lock"><i class="ls-red-dot"></i> I SIKTET</div><div class="ls-logo"><img src="https://lssk.no/wp-content/uploads/2026/08/LSK-Logo.svg" alt="Lofoten Sportsskytterklubb" width="210" height="106"><small>Lofoten</small></div><div class="ls-impact"></div><div class="ls-coordinates"><span>LSSK / SLYDALEN</span><span>03 — 03</span></div></div>
+   <div class="ls-copy"><span class="ls-tag">Din bedrift i siktet</span><h3>Sammen om neste<br>treningskveld.</h3><p>Et godt klubbmiljø bygges av mennesker som engasjerer seg. Vi tar gjerne en prat om hvordan din bedrift kan støtte klubben og få en plass her.</p><a href="/kontakt/">Snakk med oss om samarbeid ↗</a></div>
+  </article>
+ </div>
+ <div class="ls-navigation">
+  <div class="ls-marquee" aria-label="Sponsorlogoer som beveger seg mot venstre"><div class="ls-track"><div class="ls-choices" role="group" aria-label="Velg sponsor"><button class="ls-choice" type="button" aria-label="Vis lokalt engasjement" aria-pressed="true"><img src="https://lssk.no/wp-content/uploads/2026/08/LSK-Logo.svg" alt="" width="130" height="45"><small>01</small></button><button class="ls-choice" type="button" aria-label="Vis rom for flere gode treff" aria-pressed="false"><img src="https://lssk.no/wp-content/uploads/2026/08/LSK-Logo.svg" alt="" width="130" height="45"><small>02</small></button><button class="ls-choice" type="button" aria-label="Vis sammen om treningskvelden" aria-pressed="false"><img src="https://lssk.no/wp-content/uploads/2026/08/LSK-Logo.svg" alt="" width="130" height="45"><small>03</small></button></div></div></div>
+ </div>
+ <p class="ls-status" aria-live="polite" style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);"></p>
+ <div class="ls-footer"><p>Vil din bedrift være med på laget?</p><a href="/kontakt/">Snakk med oss <span aria-hidden="true">↗</span></a></div>
+</section>
+<script>
+(()=>{
+ const root=document.getElementById('lssk-sponsors');if(!root)return;
+ if(root.lsskDispose)root.lsskDispose();
+ root.querySelectorAll('.ls-copy-set,.ls-filler').forEach(e=>e.remove());
+ const abort=new AbortController(),signal=abort.signal,panels=[...root.querySelectorAll('.ls-panel')],choices=[...root.querySelectorAll('.ls-choice')],stage=root.querySelector('.ls-stage'),motion=matchMedia('(prefers-reduced-motion: reduce)'),track=root.querySelector('.ls-track'),marquee=root.querySelector('.ls-marquee'),original=root.querySelector('.ls-choices');
+ let active=0,timer=null,inView=false,hover=false,focus=false,start=null,gesture=null,half=0,holdUntil=0,suppressClickUntil=0,frame=0,last=0,scrollCarry=0,disposed=false;
+ const on=(el,type,fn,opts={})=>el.addEventListener(type,fn,{...opts,signal});
+ const normalize=()=>{if(!half||motion.matches)return;const x=marquee.scrollLeft;if(x<half*.5)marquee.scrollLeft=x+half;else if(x>half*1.5)marquee.scrollLeft=x-half;};
+ choices.forEach((b,i)=>b.dataset.slide=String(i));
+ const buildStrip=()=>{
+  track.querySelectorAll('.ls-copy-set').forEach(e=>e.remove());original.querySelectorAll('.ls-filler').forEach(e=>e.remove());
+  const base=original.getBoundingClientRect().width;if(!base)return;
+  if(!motion.matches){
+   const repeat=Math.max(1,Math.ceil(marquee.clientWidth/base));
+   for(let r=1;r<repeat;r++)choices.forEach(b=>{const f=b.cloneNode(true);f.classList.add('ls-filler');f.tabIndex=-1;f.setAttribute('aria-hidden','true');original.append(f);});
+   half=original.getBoundingClientRect().width;
+   for(let i=0;i<2;i++){const copy=original.cloneNode(true);copy.classList.add('ls-copy-set');copy.setAttribute('aria-hidden','true');copy.removeAttribute('role');copy.removeAttribute('aria-label');copy.querySelectorAll('button').forEach(b=>b.tabIndex=-1);if(i===0)track.prepend(copy);else track.append(copy);}
+   marquee.scrollLeft=half;
+  }else{half=0;marquee.scrollLeft=0;}
+  root.classList.add('is-ready');
+ };
+ const stop=()=>{clearInterval(timer);timer=null;};
+ const sync=()=>{stop();if(!motion.matches&&inView&&!hover&&!focus&&!gesture&&!document.hidden&&panels.length>1)timer=setInterval(()=>{if(performance.now()>holdUntil)show(active+1,false);},7000);};
+ const show=(n,manual=true)=>{active=(n+panels.length)%panels.length;panels.forEach((p,i)=>{p.hidden=i!==active;p.classList.remove('is-hit');});root.querySelectorAll('.ls-choice').forEach(b=>b.setAttribute('aria-pressed',String(Number(b.dataset.slide)===active)));const p=panels[active];void p.offsetWidth;p.classList.add('is-hit');if(manual){root.querySelector('.ls-status').textContent=p.getAttribute('aria-label');holdUntil=performance.now()+1800;sync();}};
+ on(marquee,'click',e=>{if(performance.now()<suppressClickUntil){suppressClickUntil=0;e.preventDefault();e.stopImmediatePropagation();}},{capture:true});
+ on(track,'click',e=>{const b=e.target.closest('.ls-choice');if(b)show(Number(b.dataset.slide));});
+ on(marquee,'dragstart',e=>e.preventDefault());
+ on(marquee,'pointerdown',e=>{
+  if(!e.isPrimary||(e.pointerType==='mouse'&&e.button!==0))return;
+  suppressClickUntil=0;gesture={id:e.pointerId,x:e.clientX,originX:e.clientX,originY:e.clientY,mouse:e.pointerType==='mouse',moved:false};holdUntil=performance.now()+1800;sync();
+ });
+ on(window,'pointermove',e=>{
+  if(!gesture||gesture.id!==e.pointerId)return;
+  const dx=e.clientX-gesture.x,total=e.clientX-gesture.originX,dy=e.clientY-gesture.originY;gesture.x=e.clientX;
+  if(Math.abs(total)>6&&Math.abs(total)>Math.abs(dy))gesture.moved=true;
+  if(gesture.mouse&&gesture.moved){e.preventDefault();if(!marquee.hasPointerCapture(e.pointerId))marquee.setPointerCapture(e.pointerId);marquee.classList.add('is-dragging');marquee.scrollLeft-=dx;normalize();}
+ },{passive:false});
+ const release=e=>{if(!gesture||gesture.id!==e.pointerId)return;if(gesture.moved)suppressClickUntil=performance.now()+400;if(marquee.hasPointerCapture(e.pointerId))marquee.releasePointerCapture(e.pointerId);gesture=null;marquee.classList.remove('is-dragging');holdUntil=performance.now()+1800;sync();};
+ on(window,'pointerup',release);on(window,'pointercancel',release);
+ on(marquee,'scroll',normalize,{passive:true});
+ on(root,'keydown',e=>{if(e.key==='Tab'){focus=true;sync();}if(!['ArrowLeft','ArrowRight','Home','End'].includes(e.key)||!e.target.closest('.ls-choice'))return;e.preventDefault();show(e.key==='Home'?0:e.key==='End'?panels.length-1:active+(e.key==='ArrowRight'?1:-1));});
+ on(root,'pointerenter',e=>{if(e.pointerType==='mouse'){hover=true;sync();}});on(root,'pointerleave',()=>{hover=false;sync();});
+ on(root,'focusin',e=>{focus=e.target.matches(':focus-visible');sync();});on(root,'focusout',e=>{if(!root.contains(e.relatedTarget)){focus=false;sync();}});
+ on(stage,'pointerdown',e=>{if(e.isPrimary&&!e.target.closest('a,button'))start={x:e.clientX,y:e.clientY};});
+ on(stage,'pointerup',e=>{if(!start)return;const dx=e.clientX-start.x,dy=e.clientY-start.y;start=null;if(Math.abs(dx)>45&&Math.abs(dx)>Math.abs(dy)*1.3)show(active+(dx<0?1:-1));});on(stage,'pointercancel',()=>{start=null;});
+ on(document,'visibilitychange',()=>{last=0;sync();});on(motion,'change',()=>{buildStrip();sync();});
+ const rowResize=new ResizeObserver(buildStrip);rowResize.observe(marquee);
+ const observer=new IntersectionObserver(entries=>{inView=entries[0].isIntersecting;sync();},{threshold:.2});observer.observe(root);
+ const tick=t=>{if(disposed)return;const dt=last?Math.min(t-last,50):0;last=t;if(inView&&!motion.matches&&!hover&&!focus&&!gesture&&!document.hidden&&t>holdUntil&&half){scrollCarry+=half/36000*dt;const step=Math.floor(scrollCarry);if(step){marquee.scrollLeft+=step;scrollCarry-=step;normalize();}}frame=requestAnimationFrame(tick);};
+ const detached=new MutationObserver(()=>{if(!root.isConnected)root.lsskDispose();});detached.observe(document.body,{childList:true,subtree:true});
+ root.lsskDispose=()=>{disposed=true;stop();cancelAnimationFrame(frame);abort.abort();observer.disconnect();rowResize.disconnect();detached.disconnect();};
+ buildStrip();show(0,false);sync();frame=requestAnimationFrame(tick);
+})();
+</script>
