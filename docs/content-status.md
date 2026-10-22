@@ -1,6 +1,6 @@
 # Website content and layout status
 
-Updated: 2026-10-21. Changes were made through the signed-in WordPress UI on lssk.no. The active theme and database are not stored in this repository.
+Updated: 2026-10-22. Changes were made through the signed-in WordPress UI on lssk.no. The active theme and database are not stored in this repository.
 
 ## Editing locations
 
@@ -130,3 +130,44 @@ All breadcrumb-style1 page banners now use 52px vertical padding on mobile, 20px
 Only the homepage #kurs widget gets 20px horizontal padding, a 26–32px heading, and 17px paragraph text with 1.7 line height. Long contact links can wrap. Mobile heading character animations are neutralized inside this widget to prevent transient clipping; desktop animations are retained. Text, links, photographs and desktop styles were not changed.
 
 Published successfully. Customizer mobile preview at 320px confirmed the full Styremøtereferater heading at 24px, heading scroll width equal to its 263px available width, and no page overflow (303px document width). The course widget showed 20px padding, a 26px heading and 17px paragraph text. Screenshot capture timed out; validation used the rendered mobile preview and computed layout.
+
+## Beginner guide and confirmed costs (2026-10-21)
+
+After reviewing SVPK and Hokksund Pistolklubb, the user authorized adding the content judged useful. Confirmed facts: the ordinary safety course costs NOK 1,000; beginner club-pistol loans have no rental charge; ammunition is charged at cost. No membership fee, DSSN-course price, fixed ammunition price, equipment package or new course date was supplied.
+
+Published page 5573, **Ny på pistolskyting?**, at https://lssk.no/ny-pa-pistolskyting/. Source of truth: one Elementor HTML widget `fd1113f` in container `4d00f5b`. An empty imported container was removed. Maintain it in Elementor, not separately in the WordPress block editor. HTML/CSS maintenance copy: outputs/lssk-ny-pa-pistolskyting.html. Header Style 4, Footer Style 4, one-column theme layout, banner on and title Ny på pistolskyting?. The page-scoped banner CSS uses IMG_20260508_184728-scaled.jpg; the content photograph is 20260820_194724-scaled.jpg. Both are existing club photos.
+
+Content covers first contact/visit, safe introduction, course interest by email to Mads even before a date is announced, confirmed costs, practical preparation, existing training times/map, prior-course enquiries, NSF/DSSN links and Min idrett membership. The ordinary course and DSSN's separate course/approval are explicitly distinguished; Halvor handles DSSN requirements, dates and prices. No new form, payment flow, mailing list, course booking or policy was introduced.
+
+Homepage 193: beginner card now links to the guide; course card links to its #sikkerhetskurs section. Both texts and button labels were updated. The existing #kurs description now states NOK 1,000, free beginner pistol loans and ammunition at cost, and links to the guide and Mads. Existing images, card styling, slider, shot counter and layout are retained.
+
+Training service 3320: added first-visit preparation and confirmed course/loan/ammunition costs, with guide/DSSN links. Existing schedule, photo, map and service template preserved. NSF 1109: added one short paragraph with costs and the guide link under En trygg vei inn i sporten. DSSN 1118: added the guide link and a direct route to Halvor under Slik kommer du i gang. Full pre-change and updated HTML copies are in outputs/ with names containing beginner-guide. Calendar work and empty board-minutes page were untouched.
+
+Validation: signed-out browser confirmed the new page, header/footer, banner/photo and all three cost facts; homepage card/course links and published #kurs text; guide links on Training, NSF and DSSN. Mobile at 360px: document width 345px, single-column grid 295px, 28px content headings, club photo loaded, no horizontal overflow. Elementor mobile preview independently showed 293px content within a 360px viewport. Screenshots: outputs/lssk-nybegynner-publisert-2026-10-21.png, outputs/lssk-nybegynner-innhold-2026-10-21.png and outputs/lssk-nybegynner-mobil-2026-10-21.png.
+
+Editing note: WordPress code-editor textarea overlapped the Firerangers metabox and prevented mouse selection. Switching to the visual editor restored working theme controls. Elementor initially imported the WordPress content as Text Editor; that widget was replaced with the single HTML widget above to match the discipline-page maintenance approach.
+
+## Beginner guide menu entry (2026-10-21)
+
+At the user's request, added page 5573 to Main Menu 71 as menu item 5594, labelled Ny på pistolskyting?, under TRENING (menu item 3330). TRENING retains its existing training-page URL. The new entry points to /ny-pa-pistolskyting/. Saved through Appearance > Menus. Verified the published desktop menu's parent/child markup and opened the mobile menu at 390px, expanded TRENING and followed the new link to the correct page. Screenshot: outputs/lssk-nybegynner-meny-mobil-2026-10-21.png. Temporary viewport override reset.
+
+Originality clarification: the beginner guide was written for LSSK using the club's supplied facts and contacts. The other clubs informed topic selection and information structure; their paragraphs, photographs, local prices and policies were not copied.
+
+## General contact telephone changed to Mads (2026-10-21)
+
+User requested replacing Kjetil's telephone everywhere except his entry on Kontakt. General public telephone is now Mads, 970 63 150. Appearance > FIRERANGERS Options: Header Style Four phone field `phone_num_v4` and Mobile Sidebar `mobile_phone_no` updated and saved. The homepage's separate contact widget is also verified as «Ta kontakt med Mads» with tel:+4797063150. Header and mobile phone links render Mads's number. No footer telephone was present. Existing email addresses were outside the request and retained.
+
+The public audit found one additional content occurrence on Personvernerklæring, page 5461. Changed its telephone anchor from tel:+4791109990 / 91 10 99 90 to tel:+4797063150 / 970 63 150 in the WordPress code editor, preserved all other policy text except its last-updated date, and saved. Backup: outputs/lssk-personvern-before-phone-update.html.
+
+Validated signed out: home, Training, NSF, DSSN, Om oss, beginner guide, Kalender, Styremøtereferater and Personvernerklæring have no Kjetil telephone links after the update. Kontakt retains 91 10 99 90 only in Kjetil Jørgensen's STYRETS LEDER card; its global header/mobile contact is Mads. Checked the mobile menu at 390px and reset the temporary viewport. Refreshed the public home cache through the existing Delete Cache toolbar action; no cache configuration was changed. Screenshots: outputs/lssk-mads-telefon-mobil-2026-10-21.png and outputs/lssk-mads-telefon-publisert-2026-10-21.png.
+
+## General contact email changed to Mads (2026-10-21)
+
+User requested the same replacement for email: general public address is now mads-johannessen@hotmail.com; retain kjetil.jorgensen@gmail.com in Kjetil's Kontakt board card. Updated theme Mobile Sidebar field mobile_email_v1, Footer Four Menu 66's Kontakt item 3211 (mailto URL), and the contact address/link in Personvernerklæring page 5461. Its email-service sentence now identifies Hotmail/Microsoft rather than Gmail/Google; no other policy content was changed. Backup: outputs/lssk-personvern-before-email-update.html.
+
+Saved all changes through WordPress and refreshed the existing public cache. Signed-out audit of Home, Training, NSF, DSSN, Om oss, beginner guide, Kalender, Styremøtereferater and Personvernerklæring found no Kjetil mailto links. Kontakt contains exactly one, in his preserved STYRETS LEDER card. Mobile menu at 390px displays Mads's complete address wrapped within the panel and a matching mailto link. Screenshot: outputs/lssk-mads-epost-mobil-2026-10-21.png. Viewport override reset. No messages were sent and no mailbox/account configuration was changed.
+
+
+## Social sharing and sponsor presentation (2026-10-22)
+
+Published the club sharing metadata and a public sponsor-invitation widget on homepage 193. See [Social sharing previews](social-sharing.md) for the installed plugin/settings and [Homepage sponsor presentation](homepage-sponsors.md) for the current widget, editing instructions and verification. Sponsor widget 8902097/container ada784f uses the club logo until actual sponsors are agreed. It has compact moving logos, native touch scrolling and mouse dragging; the play/pause control is removed. Maintenance code is [widgets/homepage-sponsors.html](../widgets/homepage-sponsors.html). These notes supersede earlier deferrals and hidden-test descriptions; WordPress remains the deployed source of truth.
