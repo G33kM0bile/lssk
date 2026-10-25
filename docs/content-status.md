@@ -1,6 +1,6 @@
 # Website content and layout status
 
-Updated: 2026-10-22. Changes were made through the signed-in WordPress UI on lssk.no. The active theme and database are not stored in this repository.
+Updated: 2026-10-25. Changes were made through the signed-in WordPress UI on lssk.no. The active theme and database are not stored in this repository.
 
 ## Editing locations
 
@@ -171,3 +171,19 @@ Saved all changes through WordPress and refreshed the existing public cache. Sig
 ## Social sharing and sponsor presentation (2026-10-22)
 
 Published the club sharing metadata and a public sponsor-invitation widget on homepage 193. See [Social sharing previews](social-sharing.md) for the installed plugin/settings and [Homepage sponsor presentation](homepage-sponsors.md) for the current widget, editing instructions and verification. Sponsor widget 8902097/container ada784f uses the club logo until actual sponsors are agreed. It has compact moving logos, native touch scrolling and mouse dragging; the play/pause control is removed. Maintenance code is [widgets/homepage-sponsors.html](../widgets/homepage-sponsors.html). These notes supersede earlier deferrals and hidden-test descriptions; WordPress remains the deployed source of truth.
+
+## Contact page: board, instructors and projects (2026-10-25)
+
+Published the user's expanded role list in the existing Elementor HTML widget **ee642d4** on Kontakt page **1398**, https://lssk.no/kontakt/. Existing header/footer, club banner photograph, colours and responsive card style preserved. Added anchor navigation for Styret, Kurs og instruktører and Baner og prosjekter.
+
+Current board: Kjetil Jørgensen (chair), Jan Rune Hauge (deputy), Morten Pilkvam (secretary), Ørjan Løvdal (treasurer), Petter Langstrand (board member), Halvor Odden and Mads Johannesen (deputy board members). Jan Rune's supplied telephone/email are now clickable in his board card. Existing Kjetil contact details retained only on Kontakt; global Mads contacts unchanged. Names use the user's latest shorter forms instead of earlier middle-name forms.
+
+NSF instructors: Mads Johannessen, Petter Langstrand, Kjetil Jørgensen and Jan Rune Hauge. DSSN instructors/ROs: Kjetil Jørgensen, Halvor Odden, Petter Langstrand and Jan Rune Hauge. Additional DSSN ROs: Alfr Nordheim and Mads Johannessen. Mads remains the main safety-course/first-visit contact and Halvor the DSSN-course contact, with their existing details. No course dates, certifications beyond the supplied roles, or prices were invented.
+
+Baneansvarlig Slydalen is now **Sindre Bertheussen**, replacing Morten's previous range-manager label. Indoor range project group: Jan Rune Hauge, Skule Karijord and Walter Hansen. Slydalen range expansion: Jan Rune Hauge. Jan Rune's project mentions link to his contact card; no contact details were invented for others.
+
+Spelling follows the input: the board list says Mads Johannesen, while instructor/RO lists say Mads Johannessen. These forms may be unified once the user confirms the preferred spelling.
+
+Signed-out audit of Om oss, NSF, DSSN, Trening and beginner guide found no conflicting old board/range-role references; their existing Mads/Halvor course contact routes remain valid. Signed-out Kontakt verification confirmed seven board cards, four NSF instructors, six DSSN instructor/RO entries and three range/project cards. Telephone/mail links checked. At390px viewport: document client/scroll widths both375px, section widths both355px, project grid one315px column. Temporary viewport reset.
+
+Live source remains Elementor. Local before/after copies: outputs/lssk-kontakt-before-roles-2026-10-25.html and outputs/lssk-kontakt-roles-2026-10-25.html. Screenshots: outputs/lssk-kontakt-styret-2026-10-25.png and outputs/lssk-kontakt-prosjekter-mobil-2026-10-25.png. These local artifacts are not GitHub-deployed files.
