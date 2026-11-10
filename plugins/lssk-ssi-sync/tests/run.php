@@ -97,13 +97,24 @@ $mapped = Event_Mapper::map( fixture(), $settings );
 check( '2026-10-16 18:00:00' === $mapped['start_date'], 'UTC to Oslo summer time' );
 check( '2026-12-16 17:00:00' === Event_Mapper::map( fixture( array( 'starts' => '2026-12-16T16:00:00Z', 'ends' => '2026-12-16T18:00:00Z' ) ), $settings )['start_date'], 'UTC to Oslo winter time' );
 check( '2026-10-16 20:00:00' === Event_Mapper::map( fixture( array( 'ends' => null ) ), $settings )['end_date'], 'Fallback duration applied when end is absent' );
-check( str_contains( Event_Mapper::map( fixture( array( 'ends' => null ) ), $settings )['content'], 'estimated' ), 'Estimated end time disclosed' );
+check( str_contains( Event_Mapper::map( fixture( array( 'ends' => null ) ), $settings )['content'], 'estimert' ), 'Estimated end time disclosed' );
 fails( static fn() => Event_Mapper::map( fixture( array( 'starts' => '2026-10-16T16:00:00' ) ), $settings ), 'Reject ambiguous timestamps without offset' );
 fails( static fn() => Event_Mapper::map( fixture( array( 'starts' => '2026-02-30T16:00:00Z' ) ), $settings ), 'Reject impossible dates' );
 fails( static fn() => Event_Mapper::map( fixture( array( 'ends' => '2026-10-16T15:00:00Z' ) ), $settings ), 'Reject end before start' );
 fails( static fn() => Event_Mapper::map( fixture( array( 'get_full_absolute_url' => 'https://evil.example/event/22/30091/' ) ), $settings ), 'Reject unexpected source hosts' );
 fails( static fn() => Event_Mapper::map( fixture( array( 'get_full_absolute_url' => 'https://shootnscoreit.com/event/22/30091/?secret=123' ) ), $settings ), 'Reject source URLs carrying query credentials' );
 check( ! Event_Mapper::is_public( fixture( array( 'get_visibility_display' => 'Private' ) ) ) && ! Event_Mapper::is_public( array() ), 'Unknown and private visibility fail closed' );
+
+check( Event_Mapper::is_public( fixture( array( 'visibility' => 'res', 'get_visibility_display' => 'Restricted; visible, searchable but details/names only participants' ) ) ), 'Approved searchable restricted code is accepted' );
+check( Event_Mapper::is_public( fixture( array( 'visibility' => 'res', 'get_visibility_display' => 'Begrenset tilgang; synlig og søkbar' ) ) ), 'Approved raw code is independent of display language' );
+check( ! Event_Mapper::is_public( fixture( array( 'visibility' => 'pri', 'get_visibility_display' => 'Private' ) ) ), 'Private raw code stays excluded' );
+check( ! Event_Mapper::is_public( fixture( array( 'visibility' => 'unknown', 'get_visibility_display' => 'Restricted' ) ) ), 'Unknown codes are not broadly accepted' );
+check( Event_Mapper::map( fixture( array( 'get_full_absolute_url' => '/event/22/30091/' ) ), $settings )['url'] === 'https://shootnscoreit.com/event/22/30091/', 'Relative SSI source URL becomes canonical HTTPS link' );
+check( Event_Mapper::map( fixture( array( 'get_full_absolute_url' => 'shootnscoreit.com/ipsc/match/30091/' ) ), $settings )['url'] === 'https://shootnscoreit.com/event/22/30091/', 'SSI hostname without a scheme becomes canonical HTTPS link' );
+fails( static fn() => Event_Mapper::map( fixture( array( 'get_full_absolute_url' => '//evil.example/event/22/30091/' ) ), $settings ), 'Protocol-relative external hosts are rejected' );
+$minimal = Event_Mapper::map( fixture( array( 'description' => 'PRIVATE_DESCRIPTION_MARKER', 'competitors' => array( 'PRIVATE_PARTICIPANT_MARKER' ) ) ), $settings );
+check( ! str_contains( $minimal['content'], 'PRIVATE_DESCRIPTION_MARKER' ) && ! str_contains( $minimal['content'], 'PRIVATE_PARTICIPANT_MARKER' ), 'Only approved basic fields enter imported content' );
+
 check( '60:22:30091' !== Event_Mapper::identity( fixture( array( 'get_content_type_key' => 30 ) ), 60 ), 'Content types disambiguate event IDs' );
 $options[Plugin::SETTINGS] = array_merge( $settings, array( 'accepted' => true ) );
 $options[Plugin::SECRETS] = array( 'key' => 'test-key', 'access' => 'old-jwt', 'refresh' => 'old-refresh' );
