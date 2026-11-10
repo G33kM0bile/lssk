@@ -53,7 +53,11 @@ final class Event_Mapper {
         }
         // Use SSI's canonical event route from validated identifiers. This avoids
         // legacy/signed API URL variants and never publishes their query or token.
-        $parts = wp_parse_url( (string) ( $event['get_full_absolute_url'] ?? '' ) );
+        $source_url = (string) ( $event['get_full_absolute_url'] ?? '' );
+        if ( str_starts_with( $source_url, 'shootnscoreit.com/' ) ) {
+            $source_url = 'https://' . $source_url;
+        }
+        $parts = wp_parse_url( $source_url );
         $relative = is_array( $parts )
             && ! isset( $parts['scheme'] ) && ! isset( $parts['host'] )
             && str_starts_with( $parts['path'] ?? '', '/' ) && ! str_starts_with( $parts['path'] ?? '', '//' );
