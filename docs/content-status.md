@@ -200,3 +200,18 @@ Verified one calendar iframe, public month navigation and Norwegian text. Elemen
 **Import is not yet operational.** SSI Sync 0.2.0 is configured for organization 60 and Europe/Oslo with credentials present. Live Preview received 37 events but excluded all 37 through its Public-only visibility check. Events list is empty. Automatic publication was disabled during this review; hourly synchronization remains disabled.
 
 SSI shows a genuine upcoming Lofoten Cold Trigger event, 22/30342, on 28 November 2026 at 10:00 Europe/Oslo, marked limited access but visible/searchable. This does not match the plugin's strict English Public label check. The other 36 entries were not individually checked. Verify raw SSI visibility codes and the approved scope before changing the allowlist or publishing. See [SSI synchronization](ssi-sync.md) for evidence, configuration locations and remaining steps. Do not broadly allow unknown/private events.
+
+
+## Calendar import published after visibility approval
+
+This supersedes the preceding “Import is not yet operational” note. The user approved basic event information for SSI's visible/searchable restricted category. The authenticated API response verified **20 pub**, **15 res**, **1 clb** and **1 lim** entries. The mapper explicitly accepts only pub and res; club-only, non-searchable and unknown entries stay excluded. The old Public-label expression failed on SSI’s semicolon punctuation, so public matching now uses verified raw codes. Source links are validated and normalized to canonical HTTPS routes from numeric SSI identifiers, including SSI's scheme-less hostname format.
+
+**35 real events** were imported as drafts, checked and then published; **2 source entries remain excluded** (one club-only, one not searchable). Thirty-four published events are earlier in 2026. The upcoming event is **Lofoten Cold Trigger, 28 November 2026 at 10:00 Europe/Oslo**, https://lssk.no/event/lofoten-cold-trigger/. Its 12:00 finish is a clearly disclosed 120-minute fallback because SSI supplies no end time. No participant data, free-form descriptions or fake events were published.
+
+Publication on manual sync is enabled; hourly synchronization remains disabled. The first publication phase covered 15 entries; after the Public-label defect was found, another 20 were created as drafts and all 35 were published by the manual sync at 2026-11-10 23:17:34 UTC. Cold Trigger remains WordPress post 5672. Do not disable publication before a routine manual sync, as draft mode intentionally unpublishes owned imports.
+
+A critical-error fault in the parent theme's tribe-events/single-event.php was fixed by guarding the optional Tribe__Tickets__Tickets class. The same template has Norwegian headings, a full Norwegian date, no inferred availability badge and no empty organizer contact box. Preserve these direct parent-theme edits on updates, or migrate to a child override. Global Firerangers footer default now uses Footer Style 4, matching the club footer. The calendar landing page keeps its club photograph/header/footer.
+
+TEC date display now uses j. F Y, j. F, F Y, compact dd.mm.yyyy and kl. as date/time separator. Verified public calendar entry, working event/SSI links and event details. Elementor mobile preview (343px) supports selecting 28 November and shows Cold Trigger without horizontal overflow. Signed-out and physical-device checks were not performed.
+
+See [SSI synchronization](ssi-sync.md) for configuration details, scope, regression cases and live evidence. The mapper/tests are committed; the old 0.2.0 ZIP is not rebuilt and must not overwrite the production patch. Standalone PHP fixtures were not run here because PHP is unavailable; live draft/import/dedup/publication checks passed.
