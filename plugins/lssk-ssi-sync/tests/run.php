@@ -6,6 +6,15 @@ $calls = array();
 $next_id = 1;
 $fail_save = false;
 $tests = 0;
+$transients = array();
+$is_admin = $https = true;
+function current_user_can( $cap ) { global $is_admin; return $is_admin; }
+function is_ssl() { global $https; return $https; }
+function is_email( $value ) { return filter_var( $value, FILTER_VALIDATE_EMAIL ); }
+function get_current_user_id() { return 1; }
+function get_transient( $key ) { global $transients; return $transients[$key] ?? false; }
+function set_transient( $key, $value, $ttl ) { global $transients; $transients[$key] = $value; }
+function delete_transient( $key ) { global $transients; unset( $transients[$key] ); }
 function apply_filters( $hook, $value, ...$args ) { return $value; }
 function sanitize_text_field( $value ) { return trim( strip_tags( $value ) ); }
 function wp_parse_url( $value ) { return parse_url( $value ); }
@@ -168,4 +177,47 @@ $fail_save = true;
 queue_events( array( fixture( array( 'name' => 'Failed update' ) ) ) );
 fails( static fn() => Plugin::run( false ), 'Persisted event verification catches failed ORM saves' );
 $fail_save = false;
+
+// Password exchange fixtures: no real SSI account or credentials are used.
+$before_posts = serialize( array( $posts, $meta ) );
+$options[Plugin::SETTINGS]['enabled'] = false;
+$options[Plugin::SETTINGS]['publish'] = false;
+$old_credentials = $options[Plugin::SECRETS];
+$login_password = " fixture password with spaces \\ ' \" ";
+$http = array( response( array( 'token_auth' => array( 'success' => true, 'token' => array( 'token' => 'signed-in-access' ), 'refresh_token' => array( 'token' => 'signed-in-refresh' ) ) ) ) );
+Plugin::connect( ' admin@example.invalid ', $login_password );
+$login_call = end( $calls )[1];
+$login_body = json_decode( $login_call['body'], true );
+check( $login_body['variables']['password'] === $login_password && $login_body['variables']['email'] === 'admin@example.invalid', 'Login preserves password punctuation and whitespace and uses GraphQL variables' );
+check( ! isset( $login_call['headers']['Authorization'] ), 'Login does not send an old account JWT' );
+check( 'signed-in-access' === $options[Plugin::SECRETS]['access'] && 'signed-in-refresh' === $options[Plugin::SECRETS]['refresh'] && $old_credentials['key'] === $options[Plugin::SECRETS]['key'], 'Login saves both tokens and retains API key' );
+check( ! str_contains( serialize( $options ), $login_password ) && ! str_contains( serialize( $options ), 'admin@example.invalid' ), 'No login email or password saved in options or reports' );
+check( $before_posts === serialize( array( $posts, $meta ) ) && ! Plugin::settings()['enabled'] && ! Plugin::settings()['publish'], 'Connecting neither imports events nor enables syncing or publication' );
+fails( static fn() => Plugin::connect( 'admin@example.invalid', 'another-password' ), 'Repeated login requests are throttled' );
+delete_transient( 'lssk_ssi_connect_1' );
+$old_credentials = $options[Plugin::SECRETS];
+$http = array( response( array( 'token_auth' => array( 'success' => false, 'errors' => array( 'echoed-password-must-not-escape' ) ) ) ) );
+try { Plugin::connect( 'admin@example.invalid', 'bad-password' ); check( false, 'Failed login rejected' ); } catch ( RuntimeException $e ) { check( ! str_contains( $e->getMessage(), 'echoed-password' ), 'Failed login does not expose upstream error text' ); }
+check( $old_credentials === $options[Plugin::SECRETS] && ! isset( $options[Plugin::LOCK] ), 'Failed login keeps credentials and releases lock' );
+delete_transient( 'lssk_ssi_connect_1' );
+$http = array( response( array( 'token_auth' => array( 'success' => true, 'token' => array( 'token' => 'access-without-refresh' ) ) ) ) );
+fails( static fn() => Plugin::connect( 'admin@example.invalid', 'fixture-password' ), 'Incomplete token exchange fails closed' );
+check( $old_credentials === $options[Plugin::SECRETS], 'Incomplete token response retains existing tokens' );
+delete_transient( 'lssk_ssi_connect_1' );
+$https = false;
+fails( static fn() => Plugin::connect( 'admin@example.invalid', 'fixture-password' ), 'SSI password login requires HTTPS' );
+$https = true;
+$is_admin = false;
+fails( static fn() => Plugin::connect( 'admin@example.invalid', 'fixture-password' ), 'SSI password login requires administrator access' );
+$is_admin = true;
+fails( static fn() => Plugin::connect( array( 'bad-input' ), 'fixture-password' ), 'Malformed login email rejected before HTTP request' );
+fails( static fn() => Plugin::connect( 'admin@example.invalid', '' ), 'Empty login password rejected' );
+$options[Plugin::SETTINGS]['accepted'] = false;
+fails( static fn() => Plugin::connect( 'admin@example.invalid', 'fixture-password' ), 'Connection requires saved SSI terms acknowledgement' );
+$options[Plugin::SETTINGS]['accepted'] = true;
+$api = new SSI_API( 'fixture-key', array(), static function () { throw new Exception( 'Unexpected token save' ); } );
+$http = array( array( 'code' => 200, 'body' => json_encode( array( 'errors' => array( array( 'message' => 'User must be authenticated ' ) ) ) ) ) );
+try { $api->events( 60, 2026 ); check( false, 'Missing authentication detected' ); } catch ( RuntimeException $e ) { check( 401 === $e->getCode() && str_contains( $e->getMessage(), 'Connect to SSI' ), 'Actual SSI missing-JWT error is classified as authentication, not schema rejection' ); }
+$http = array( array( 'code' => 403, 'body' => 'PRIVATE BODY' ) );
+try { $api->events( 60, 2026 ); check( false, 'Forbidden rejected' ); } catch ( RuntimeException $e ) { check( str_contains( $e->getMessage(), 'API-key approval' ) && ! str_contains( $e->getMessage(), 'PRIVATE BODY' ), 'Forbidden API access gives safe approval and testing-day guidance' ); }
 echo "\nAll {$tests} checks passed. These fixtures do not replace a live WordPress/TEC smoke test.\n";

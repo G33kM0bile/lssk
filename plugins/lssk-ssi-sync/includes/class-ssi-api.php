@@ -15,6 +15,34 @@ final class SSI_API {
         $this->persist = $persist;
     }
 
+    /** Exchange a password once. Only the returned tokens are persisted. */
+    public function authenticate( string $email, string $password ) : void {
+        $query = <<<'GRAPHQL'
+mutation LsskSignIn($email: String!, $password: String!) {
+  token_auth(email: $email, password: $password) {
+    success token { token } refresh_token { token expires_at }
+  }
+}
+GRAPHQL;
+        // Do not send an old account's JWT when connecting a different account.
+        $data = $this->request( $query, array( 'email' => $email, 'password' => $password ), false );
+        $result = $data['token_auth'] ?? array();
+        if ( true !== ( $result['success'] ?? false ) ) {
+            throw new \RuntimeException( 'SSI sign-in failed. Check the SSI email/password and account status. Existing tokens were retained.' );
+        }
+        $tokens = array(
+            'access' => $result['token']['token'] ?? null,
+            'refresh' => $result['refresh_token']['token'] ?? null,
+        );
+        foreach ( $tokens as $token ) {
+            if ( ! is_string( $token ) || '' === $token || strlen( $token ) > 8192 || preg_match( '/[\x00-\x20\x7f]/', $token ) ) {
+                throw new \RuntimeException( 'SSI sign-in did not return valid access and refresh tokens. Existing tokens were retained.' );
+            }
+        }
+        call_user_func( $this->persist, $tokens );
+        $this->tokens = array_merge( $this->tokens, $tokens );
+    }
+
     public function events( int $organization, int $year ) : array {
         $query = <<<'GRAPHQL'
 query LsskEvents($org: String!, $year: Int!) {
@@ -83,6 +111,9 @@ GRAPHQL;
         if ( 401 === $status ) {
             throw new \RuntimeException( 'SSI authentication failed. Check the API key and access/refresh tokens.', 401 );
         }
+        if ( 403 === $status ) {
+            throw new \RuntimeException( 'SSI denied API access (HTTP 403). Check API-key approval, permitted testing days and the SSI account permissions. Existing events were retained.' );
+        }
         if ( 200 !== $status ) {
             throw new \RuntimeException( 'SSI returned HTTP ' . (int) $status . '. Existing events were retained.' );
         }
@@ -96,10 +127,10 @@ GRAPHQL;
                 $message = (string) ( $error['message'] ?? '' );
                 $code = strtoupper( (string) ( $error['extensions']['code'] ?? '' ) );
                 $auth = $auth || in_array( $code, array( 'UNAUTHENTICATED', 'TOKEN_EXPIRED', 'INVALID_TOKEN' ), true )
-                    || (bool) preg_match( '/not authenticated|authentication required|signature has expired|token (?:has )?expired|invalid token/i', $message );
+                    || (bool) preg_match( '/not authenticated|must be authenticated|authentication required|signature has expired|token (?:has )?expired|invalid token/i', $message );
             }
             // Do not retain upstream error text: responses can contain private data.
-            throw new \RuntimeException( $auth ? 'SSI authentication expired or was rejected.' : 'SSI rejected the GraphQL query. Check API permissions and schema compatibility; no response data was imported.', $auth ? 401 : 0 );
+            throw new \RuntimeException( $auth ? 'SSI requires an authenticated user. Use Connect to SSI, or replace the JWT access and refresh tokens. The API key alone is not sufficient.' : 'SSI rejected the GraphQL query. Check API permissions and schema compatibility; no response data was imported.', $auth ? 401 : 0 );
         }
         if ( ! isset( $body['data'] ) || ! is_array( $body['data'] ) ) {
             throw new \RuntimeException( 'SSI returned no data. Existing events were retained.' );

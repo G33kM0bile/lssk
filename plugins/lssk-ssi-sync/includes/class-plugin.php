@@ -69,7 +69,7 @@ final class Plugin {
             update_option( self::SECRETS, $stored, false );
             $saved = (array) get_option( self::SECRETS, array() );
             if ( ( $saved['access'] ?? '' ) !== $tokens['access'] || ( $saved['refresh'] ?? '' ) !== $tokens['refresh'] ) {
-                throw new \RuntimeException( 'Could not save refreshed SSI credentials. Check database access.' );
+                throw new \RuntimeException( 'Could not save SSI tokens. Check database access.' );
             }
         } );
     }
@@ -251,20 +251,53 @@ final class Plugin {
         }
         check_admin_referer( 'lssk_ssi' );
         $action = sanitize_key( wp_unslash( $_POST['ssi_action'] ?? '' ) );
+        // Remove the password from the global request before invoking other hooks.
+        $password = is_string( $_POST['ssi_password'] ?? null ) ? wp_unslash( $_POST['ssi_password'] ) : '';
+        unset( $_POST['ssi_password'], $_REQUEST['ssi_password'] );
         try {
             if ( 'save' === $action ) {
                 self::save_settings( wp_unslash( $_POST ) );
+            } elseif ( 'connect' === $action ) {
+                self::connect( wp_unslash( $_POST['ssi_email'] ?? '' ), $password );
             } elseif ( in_array( $action, array( 'preview', 'sync' ), true ) ) {
                 self::run( 'preview' === $action );
             } else {
                 throw new \RuntimeException( 'Unknown action.' );
             }
-            set_transient( 'lssk_ssi_notice_' . get_current_user_id(), array( 'ok' => true, 'text' => 'save' === $action ? 'Settings saved.' : ( 'preview' === $action ? 'Preview completed. No calendar entries changed.' : 'Sync completed.' ) ), 60 );
+            $messages = array( 'save' => 'Settings saved.', 'connect' => 'SSI tokens saved. The password was not stored. Run Preview SSI events to verify organization access.', 'preview' => 'Preview completed. No calendar entries changed.', 'sync' => 'Sync completed.' );
+            set_transient( 'lssk_ssi_notice_' . get_current_user_id(), array( 'ok' => true, 'text' => $messages[ $action ] ), 60 );
         } catch ( \Throwable $error ) {
             set_transient( 'lssk_ssi_notice_' . get_current_user_id(), array( 'ok' => false, 'text' => $error instanceof \RuntimeException ? $error->getMessage() : 'Operation failed. Check plugin compatibility.' ), 60 );
+        } finally {
+            unset( $password );
         }
         wp_safe_redirect( admin_url( 'options-general.php?page=lssk-ssi-sync' ) );
         exit;
+    }
+
+    public static function connect( $email, string $password ) : void {
+        if ( ! current_user_can( 'manage_options' ) || ! is_ssl() ) {
+            throw new \RuntimeException( 'SSI sign-in requires an administrator using HTTPS.' );
+        }
+        if ( ! self::settings()['accepted'] ) {
+            throw new \RuntimeException( 'Save the API key and acknowledge SSI developer/API terms before connecting.' );
+        }
+        if ( ! is_string( $email ) || ! is_email( trim( $email ) ) || strlen( $email ) > 254 || '' === $password || strlen( $password ) > 4096 ) {
+            throw new \RuntimeException( 'Enter a valid SSI email address and password.' );
+        }
+        $throttle = 'lssk_ssi_connect_' . get_current_user_id();
+        if ( get_transient( $throttle ) ) {
+            throw new \RuntimeException( 'Please wait one minute before trying SSI sign-in again.' );
+        }
+        $api = self::api();
+        set_transient( $throttle, 1, 60 );
+        $lock = self::lock();
+        try {
+            $api->authenticate( trim( $email ), $password );
+            delete_option( self::PREVIEW );
+        } finally {
+            self::unlock( $lock );
+        }
     }
 
     private static function save_settings( array $input ) : void {
@@ -335,6 +368,18 @@ final class Plugin {
             <tr><th>Schedule</th><td><label><input type="checkbox" name="enabled" value="1" <?php checked( $settings['enabled'] ); ?>> Enable hourly synchronization</label><p class="description">Uses WP-Cron. Low-traffic sites should trigger WordPress cron from the server scheduler.</p></td></tr>
         </table>
         <?php submit_button( 'Save settings' ); ?>
+        </form>
+        <h2>Connect to SSI</h2>
+        <p>Save your API key and SSI terms acknowledgement above first. Then sign in with an SSI account that may read the club's events. Only access and refresh tokens are saved; the plugin does not store the email or password. Connecting does not import or publish events.</p>
+        <?php if ( ! is_ssl() ) : ?><p><strong>Open this administration page over HTTPS before signing in to SSI.</strong></p><?php endif; ?>
+        <form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" autocomplete="off">
+        <?php wp_nonce_field( 'lssk_ssi' ); ?>
+        <input type="hidden" name="action" value="lssk_ssi"><input type="hidden" name="ssi_action" value="connect">
+        <table class="form-table" role="presentation">
+            <tr><th><label for="ssi-email">SSI email address</label></th><td><input id="ssi-email" name="ssi_email" type="email" autocomplete="off" class="regular-text" required value="" <?php disabled( ! is_ssl() ); ?>></td></tr>
+            <tr><th><label for="ssi-password">SSI password (used once)</label></th><td><input id="ssi-password" name="ssi_password" type="password" autocomplete="new-password" class="regular-text" required value="" <?php disabled( ! is_ssl() ); ?>><p class="description">Enter the password directly here. Do not send it to another administrator. Browser password managers may offer to save it; that is separate from the plugin.</p></td></tr>
+        </table>
+        <?php submit_button( 'Connect to SSI', 'secondary', 'submit', true, is_ssl() ? array() : array( 'disabled' => 'disabled' ) ); ?>
         </form>
         <h2>Import controls</h2>
         <p>Reads the current and next calendar year. Save settings before running. Entries missing from SSI responses are retained for manual review.</p>
