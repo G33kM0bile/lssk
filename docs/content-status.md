@@ -187,3 +187,16 @@ Spelling follows the input: the board list says Mads Johannesen, while instructo
 Signed-out audit of Om oss, NSF, DSSN, Trening and beginner guide found no conflicting old board/range-role references; their existing Mads/Halvor course contact routes remain valid. Signed-out Kontakt verification confirmed seven board cards, four NSF instructors, six DSSN instructor/RO entries and three range/project cards. Telephone/mail links checked. At390px viewport: document client/scroll widths both375px, section widths both355px, project grid one315px column. Temporary viewport reset.
 
 Live source remains Elementor. Local before/after copies: outputs/lssk-kontakt-before-roles-2026-10-25.html and outputs/lssk-kontakt-roles-2026-10-25.html. Screenshots: outputs/lssk-kontakt-styret-2026-10-25.png and outputs/lssk-kontakt-prosjekter-mobil-2026-10-25.png. These local artifacts are not GitHub-deployed files.
+
+
+## Published calendar (2026-11-10)
+
+This supersedes the older empty-calendar-shell status above. Page **5197**, **/kalender/**, is published with one Elementor HTML widget and The Events Calendar native calendar embed **5646** (https://lssk.no/calendar-embed/Yv2UoLHPAb3/embed/). Preserve the existing club banner photograph, Header Style 4, Footer Style 4 and club navigation. The public main/footer calendar links already use /kalender/. Keep native /events/ routes for embedded navigation; the standalone archive is not the public landing page.
+
+Maintain the landing-page HTML/CSS in Elementor, and the embed under Events > Calendar Embeds. The Fire Rangers Event List widget is a manual demo card, not the live calendar, and was not published. Site language is now Norsk bokmål (nb_NO), time zone Europe/Oslo, Monday first day and 24-hour time. Small localization filters in firerangers-child/functions.php cover the empty-day message and Home breadcrumb. WPFront Notification Bar's Custom CSS suppresses the duplicate notice only inside body.single-tec_calendar_embed; the outer site notice remains. TEC Month View Cache is currently disabled.
+
+Verified one calendar iframe, public month navigation and Norwegian text. Elementor mobile preview at 343px had equal client/scroll widths. Public-tab viewport overrides did not work reliably; mobile testing used Elementor. Signed-out rendering and a genuine event detail page remain untested. No demo/fabricated events were created.
+
+**Import is not yet operational.** SSI Sync 0.2.0 is configured for organization 60 and Europe/Oslo with credentials present. Live Preview received 37 events but excluded all 37 through its Public-only visibility check. Events list is empty. Automatic publication was disabled during this review; hourly synchronization remains disabled.
+
+SSI shows a genuine upcoming Lofoten Cold Trigger event, 22/30342, on 28 November 2026 at 10:00 Europe/Oslo, marked limited access but visible/searchable. This does not match the plugin's strict English Public label check. The other 36 entries were not individually checked. Verify raw SSI visibility codes and the approved scope before changing the allowlist or publishing. See [SSI synchronization](ssi-sync.md) for evidence, configuration locations and remaining steps. Do not broadly allow unknown/private events.
