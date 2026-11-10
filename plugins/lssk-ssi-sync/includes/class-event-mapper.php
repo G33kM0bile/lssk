@@ -14,12 +14,11 @@ final class Event_Mapper {
     }
 
     public static function is_public( array $event ) : bool {
-        // SSI event 22/30342 verified on 2026-11-10: res means visible/searchable,
-        // with details and participant names restricted. LSSK approved importing
-        // only title, dates, venue and source link. Unknown/private codes stay excluded.
-        $label = trim( (string) ( $event['get_visibility_display'] ?? '' ) );
-        $public = ( $event['visibility'] ?? null ) === 'res'
-            || (bool) preg_match( '/^public(?:$|[\s,:(])/i', $label );
+        // Verified live SSI codes: pub is public; res is visible/searchable with
+        // details/names restricted. LSSK approved only basic fields for res.
+        // clb (members only), lim (not searchable), missing/unknown codes fail closed.
+        // Raw codes avoid localized labels and the Public; punctuation mismatch.
+        $public = in_array( $event['visibility'] ?? null, array( 'pub', 'res' ), true );
         return (bool) apply_filters( 'lssk_ssi_is_public_event', $public, $event );
     }
 
