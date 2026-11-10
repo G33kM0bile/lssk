@@ -53,6 +53,16 @@ final class Event_Mapper {
         }
         // Use SSI's canonical event route from validated identifiers. This avoids
         // legacy/signed API URL variants and never publishes their query or token.
+        $parts = wp_parse_url( (string) ( $event['get_full_absolute_url'] ?? '' ) );
+        $relative = is_array( $parts )
+            && ! isset( $parts['scheme'] ) && ! isset( $parts['host'] )
+            && str_starts_with( $parts['path'] ?? '', '/' ) && ! str_starts_with( $parts['path'] ?? '', '//' );
+        $trusted = $relative || ( is_array( $parts ) && in_array( $parts['scheme'] ?? '', array( 'http', 'https' ), true )
+            && strtolower( $parts['host'] ?? '' ) === 'shootnscoreit.com' );
+        if ( ! $trusted || isset( $parts['user'] ) || isset( $parts['pass'] )
+            || isset( $parts['port'] ) || isset( $parts['query'] ) || isset( $parts['fragment'] ) ) {
+            throw new \RuntimeException( 'An SSI event has an unexpected source URL.' );
+        }
         self::identity( $event, (int) ( $settings['organization'] ?? 0 ) );
         $url = 'https://shootnscoreit.com/event/' . (int) $event['get_content_type_key'] . '/' . (int) $event['id'] . '/';
         $venue = sanitize_text_field( (string) ( $event['venue'] ?? '' ) );
