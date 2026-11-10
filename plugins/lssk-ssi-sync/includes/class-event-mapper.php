@@ -14,10 +14,12 @@ final class Event_Mapper {
     }
 
     public static function is_public( array $event ) : bool {
-        // Fail closed. Raw visibility is not an enum in SSI's schema. Use the
-        // English display label actually supplied by SSI, or an explicit filter.
+        // SSI event 22/30342 verified on 2026-11-10: res means visible/searchable,
+        // with details and participant names restricted. LSSK approved importing
+        // only title, dates, venue and source link. Unknown/private codes stay excluded.
         $label = trim( (string) ( $event['get_visibility_display'] ?? '' ) );
-        $public = (bool) preg_match( '/^public(?:$|[\s,:(])/i', $label );
+        $public = ( $event['visibility'] ?? null ) === 'res'
+            || (bool) preg_match( '/^public(?:$|[\s,:(])/i', $label );
         return (bool) apply_filters( 'lssk_ssi_is_public_event', $public, $event );
     }
 
@@ -49,24 +51,17 @@ final class Event_Mapper {
         if ( $end <= $start ) {
             throw new \RuntimeException( 'An SSI event ends before or at its start.' );
         }
-        $url = (string) ( $event['get_full_absolute_url'] ?? '' );
-        $parts = wp_parse_url( $url );
-        if ( ! is_array( $parts ) || ( $parts['scheme'] ?? '' ) !== 'https' || strtolower( $parts['host'] ?? '' ) !== 'shootnscoreit.com'
-            || isset( $parts['user'] ) || isset( $parts['pass'] ) || isset( $parts['port'] )
-            || ! preg_match( '#^/event/[0-9]+/[0-9]+/?$#D', $parts['path'] ?? '' ) || isset( $parts['query'] ) || isset( $parts['fragment'] ) ) {
-            throw new \RuntimeException( 'An SSI event has an unexpected source URL.' );
-        }
+        // Use SSI's canonical event route from validated identifiers. This avoids
+        // legacy/signed API URL variants and never publishes their query or token.
+        self::identity( $event, (int) ( $settings['organization'] ?? 0 ) );
+        $url = 'https://shootnscoreit.com/event/' . (int) $event['get_content_type_key'] . '/' . (int) $event['id'] . '/';
         $venue = sanitize_text_field( (string) ( $event['venue'] ?? '' ) );
-        $status = sanitize_text_field( (string) ( $event['get_status_display'] ?? '' ) );
-        $content = '<p><a href="' . esc_url( $url ) . '">Event details and registration on Shoot\'n Score It</a></p>';
+        $content = '<p><a href="' . esc_url( $url ) . '">Se arrangement og påmelding på Shoot\'n Score It</a></p>';
         if ( $venue ) {
-            $content .= '<p>Location: ' . esc_html( $venue ) . '</p>';
-        }
-        if ( $status ) {
-            $content .= '<p>SSI status: ' . esc_html( $status ) . '</p>';
+            $content .= '<p>Sted: ' . esc_html( $venue ) . '</p>';
         }
         if ( $assumed ) {
-            $content .= '<p>End time is estimated; check SSI for the schedule.</p>';
+            $content .= '<p>Sluttidspunktet er estimert. Se SSI for gjeldende tidsplan.</p>';
         }
         // Deliberately omit SSI free-form descriptions and all participant data.
         return array(
