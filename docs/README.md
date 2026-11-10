@@ -13,6 +13,10 @@ Documentation for the Lofoten Sportsskytterklubb website and club applications.
 | [Development environments](development.md) | WordPress development settings and the Shot Counter instance on lab3, CT107. |
 | [TODO](todo.md) | Outstanding website and infrastructure documentation tasks. |
 
+## Email
+
+- [Club email architecture proposal](email.md) — shared `post@lssk.no` mailbox, WordPress/TiboMail staging evaluation, member addresses, routing, security and rollout checklist.
+
 ## WordPress administration
 
 | Guide | What it covers |
