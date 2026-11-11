@@ -3,7 +3,7 @@
 **Status:** Purelymail and TiboMail Free running in production; board access not yet issued. Shared multi-user workflow still needs validation.  
 **Updated:** 2026-11-11  
 **Website:** https://lssk.no  
-**Production location:** Lab4 / OSL3 (reported current location; older repository environment docs may still reference Lab2 and should be reconciled separately).
+**Production location:** Lab4 / OSL3, CT `804`. See the [production inventory](production.md).
 
 ## Goal
 
@@ -76,7 +76,7 @@ Start with the email provider's hosted webmail for personal accounts. Only if us
 - Does TiboMail Free securely support the specific multi-user workflow? **Unverified pending two-user production-safe test.**
 - Which personal addresses should be aliases versus independent accounts?
 - Is `mail.lssk.no` needed, or is provider webmail sufficient?
-- Confirm current Lab4 production details and update historical repository documentation in a separate infrastructure change.
+- See the [Lab4 migration record](migration-lab4-20261110.md) for the production host move.
 
 ## WordPress administration menu
 

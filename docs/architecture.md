@@ -8,13 +8,13 @@ https://community-scripts.org/scripts/wordpress
 
 Production baseline:
 
-- Proxmox CT: `124`
+- Proxmox: Lab4 / OSL3, node `pve`, CT `804`
 - Debian 13
 - Unprivileged LXC
 - 2 vCPU
-- 2048 MiB RAM
+- 8192 MiB RAM, 1024 MiB swap
 - 5 GB disk
-- Bridge: `vmbr0`
+- Bridge: `vmbr2`
 - IPv4: DHCP
 - IPv6: auto
 - Timezone: `Europe/Oslo`
@@ -22,7 +22,7 @@ Production baseline:
 - Keyctl: enabled
 - FUSE: disabled
 
-The development clone is CT `105`.
+Development runs on Lab2 Delta CT `105`. Production and development each have their own local MariaDB database.
 
 ## Request flow
 
@@ -31,9 +31,9 @@ Production:
 ```text
 Browser
   ↓ HTTPS
-DNS / reverse proxy
+Cloudflare Tunnel (Lab4 connector CT 103)
   ↓ HTTP
-CT 124
+Lab4 CT 804
   ↓
 Apache
   ↓
@@ -42,7 +42,7 @@ Apache
 WordPress
 ```
 
-Development follows the same pattern, but routes to CT 105.
+`dev.lssk.no` follows the same pattern through the Lab2 tunnel to Delta CT `105`.
 
 TLS is terminated by the upstream reverse proxy. WordPress correctly recognizes HTTPS when the proxy sends:
 

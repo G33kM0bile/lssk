@@ -2,10 +2,14 @@
 
 ## Identity
 
-- Proxmox CT: `124`
-- Hostname: `wordpress`
+- Proxmox: Lab4 / OSL3, node `pve`, CT `804`
+- Hostname: `wordpress.lssk.no`
 - URL: https://lssk.no
+- https://www.lssk.no redirects to the canonical HTTPS URL, preserving paths and query strings.
 - WordPress path: `/var/www/html/wordpress`
+- Database: MariaDB inside the container
+
+Production moved on 2026-11-10. The old Lab2 Delta CT `124` is stopped and retained for rollback. Lab4 CT `124` is Etherpad. See the [migration record](migration-lab4-20261110.md) for backup and cutover details.
 
 Production explicitly defines:
 

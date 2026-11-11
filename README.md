@@ -13,7 +13,7 @@ This repository contains documentation, non-sensitive configuration notes, custo
 
 | Environment | Proxmox CT | Hostname | URL | WordPress environment |
 |---|---:|---|---|---|
-| Production | Lab2 124 | `wordpress` | https://lssk.no | `production` |
+| Production | Lab4 804 | `wordpress.lssk.no` | https://lssk.no | `production` |
 | Development | Lab2 105 | `wordpress-dev` | https://dev.lssk.no | `development` |
 |ShotCounter Dev | Lab3 107 | `debian` |https://skudd.lssk.no | `development` |
 

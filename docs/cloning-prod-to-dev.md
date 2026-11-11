@@ -1,6 +1,8 @@
 # Clone production to development
 
-This documents the procedure used to create CT 105 from production CT 124.
+This documents the historical setup of Lab2 development CT `105` from the former production CT `124`. Current production is Lab4 CT `804`. For a future refresh, select a verified backup of current production and transfer it to Lab2. The November 2026 refresh used the [verified pre-cutover snapshot](migration-lab4-20261110.md) already on Lab2 PBS.
+
+Keep the restored guest disconnected while applying the [development settings](development.md). Preserve the dev network identity if retaining the existing tunnel route.
 
 ## 1. Rename the cloned container
 

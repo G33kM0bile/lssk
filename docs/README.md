@@ -22,6 +22,7 @@ Documentation for the Lofoten Sportsskytterklubb website and club applications.
 | Guide | What it covers |
 | --- | --- |
 | [Production](production.md) | Production identity, environment indicator, public development notice, and indexing. |
+| [Lab4 migration](migration-lab4-20261110.md) | Production cutover, verified backup, rollback, and the dev refresh. |
 | [Clone production to development](cloning-prod-to-dev.md) | Container cloning, URL replacement, environment settings, caches, and Apache configuration. |
 | [WordPress and theme notes](wordpress.md) | Fire Rangers parent/child themes, Elementor, theme options, WooCommerce, and favicons. |
 | [Plugins](plugins.md) | Plugin roles, custom integrations, administration tools, and potential additions. |
