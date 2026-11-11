@@ -10,6 +10,20 @@ function member_url(): string {
 	return home_url( '/rabattkoder/' );
 }
 
+function embed_url(): string {
+	return add_query_arg( 'lssk_view', 'embed', member_url() );
+}
+
+function themed_shortcode(): string {
+	$assets = plugin_dir_url( LSSK_BENEFITS_FILE ) . 'assets/';
+	wp_enqueue_style( 'lssk-benefits-member', $assets . 'member.css', array(), LSSK_BENEFITS_VERSION );
+	wp_enqueue_script( 'lssk-benefits-member', $assets . 'member.js', array(), LSSK_BENEFITS_VERSION, true );
+
+	return '<section class="lssk-benefits" data-lssk-embed="' . esc_url( embed_url() ) . '"><p><a href="' .
+		esc_url( member_url() ) . '">Åpne rabattkoder</a></p></section>';
+}
+add_shortcode( 'lssk_rabattkoder', __NAMESPACE__ . '\themed_shortcode' );
+
 function is_member_route(): bool {
 	$path = wp_parse_url( $_SERVER['REQUEST_URI'] ?? '', PHP_URL_PATH );
 	return is_string( $path ) && untrailingslashit( $path ) === untrailingslashit( wp_parse_url( member_url(), PHP_URL_PATH ) );
@@ -96,6 +110,8 @@ function handle_route(): void {
 	if ( ! is_member_route() ) {
 		return;
 	}
+	$embedded = ( $_GET['lssk_view'] ?? '' ) === 'embed';
+	$response_url = $embedded ? embed_url() : member_url();
 
 	// Serve this route without theme or analytics scripts and prevent shared caches storing offers.
 	nocache_headers();
@@ -109,7 +125,7 @@ function handle_route(): void {
 		wp_die( 'Rabattkoder krever HTTPS.', 'Rabattkoder', array( 'response' => 503 ) );
 	}
 	if ( wp_parse_url( $_SERVER['REQUEST_URI'] ?? '', PHP_URL_PATH ) !== wp_parse_url( member_url(), PHP_URL_PATH ) ) {
-		wp_safe_redirect( member_url(), 307 );
+		wp_safe_redirect( $response_url, 307 );
 		exit;
 	}
 
@@ -125,13 +141,13 @@ function handle_route(): void {
 			) ) {
 				set_session_cookie( '', time() - DAY_IN_SECONDS );
 			}
-			wp_safe_redirect( member_url(), 303 );
+			wp_safe_redirect( $response_url, 303 );
 			exit;
 		}
 		$error = attempt_access( $settings );
 		if ( $error === '' ) {
 			grant_session( $settings['generation'] );
-			wp_safe_redirect( member_url(), 303 );
+			wp_safe_redirect( $response_url, 303 );
 			exit;
 		}
 	} elseif ( ! in_array( $method, array( 'GET', 'HEAD' ), true ) ) {
@@ -144,7 +160,11 @@ function handle_route(): void {
 	status_header( 200 );
 	header( 'Content-Type: text/html; charset=UTF-8', true );
 	if ( $method !== 'HEAD' ) {
-		require dirname( __DIR__ ) . '/templates/member.php';
+		if ( $embedded ) {
+			require dirname( __DIR__ ) . '/templates/offers-panel.php';
+		} else {
+			require dirname( __DIR__ ) . '/templates/member.php';
+		}
 	}
 	exit;
 }

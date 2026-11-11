@@ -1,15 +1,15 @@
-:root {
+.lssk-standalone {
 	color-scheme: light;
 	font-family: system-ui, sans-serif;
 	color: #24211d;
 	background: #f5f2ec;
 }
 
-* { box-sizing: border-box; }
-body { margin: 0; }
-[hidden] { display: none !important; }
+.lssk-standalone *, .lssk-benefits * { box-sizing: border-box; }
+body.lssk-standalone { margin: 0; }
+.lssk-benefits [hidden] { display: none !important; }
 
-.site-header {
+.lssk-standalone .site-header {
 	display: flex;
 	flex-wrap: wrap;
 	align-items: center;
@@ -19,14 +19,14 @@ body { margin: 0; }
 	padding: 1rem max(1.25rem, calc((100% - 65rem) / 2));
 }
 
-.site-header a { color: #fff; font-weight: 650; text-decoration: none; }
-.site-header button { background: transparent; border-color: #aa9e8f; }
-main { max-width: 65rem; margin: 0 auto; padding: clamp(1.25rem, 5vw, 3.5rem) 1.25rem; }
-h1 { margin: 0 0 1.35rem; font-size: clamp(2rem, 5vw, 3rem); line-height: 1.15; }
-h2 { margin: 0 0 .65rem; font-size: 1.35rem; }
-p { line-height: 1.55; }
+.lssk-standalone .site-header a { color: #fff; font-weight: 650; text-decoration: none; }
+.lssk-standalone .site-header button { background: transparent; border-color: #aa9e8f; }
+.lssk-standalone main { max-width: 65rem; margin: 0 auto; padding: clamp(1.25rem, 5vw, 3.5rem) 1.25rem; }
+.lssk-standalone h1 { margin: 0 0 1.35rem; font-size: clamp(2rem, 5vw, 3rem); line-height: 1.15; }
+.lssk-benefits h2 { margin: 0 0 .65rem; font-size: 1.35rem; }
+.lssk-benefits p { line-height: 1.55; }
 
-.panel {
+.lssk-benefits .panel {
 	background: #fff;
 	border: 1px solid #ddd5c7;
 	border-radius: .6rem;
@@ -34,10 +34,10 @@ p { line-height: 1.55; }
 	min-width: 0;
 }
 
-.access-panel { max-width: 30rem; }
-.access-panel > p:first-child { margin-top: 0; }
-.access-panel form { display: grid; gap: .75rem; }
-.access-panel input {
+.lssk-benefits .access-panel { max-width: 30rem; }
+.lssk-benefits .access-panel > p:first-child { margin-top: 0; }
+.lssk-benefits .access-panel form { display: grid; gap: .75rem; }
+.lssk-benefits .access-panel input {
 	width: 100%;
 	border: 1px solid #85796b;
 	border-radius: .3rem;
@@ -45,7 +45,7 @@ p { line-height: 1.55; }
 	padding: .65rem;
 }
 
-button {
+.lssk-benefits button, .lssk-standalone .site-header button {
 	background: #3e3325;
 	color: #fff;
 	border: 1px solid transparent;
@@ -57,13 +57,15 @@ button {
 	padding: .55rem .8rem;
 }
 
-:focus-visible { outline: 3px solid #98671f; outline-offset: 3px; }
-.error { color: #9d241d; }
-.offers { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr)); gap: 1rem; }
-.offer-logo { display: block; width: auto; height: 3rem; max-width: 100%; object-fit: contain; margin-bottom: 1rem; }
-.offer a { color: #694a20; display: inline-block; margin-top: .85rem; }
-.terms { white-space: pre-line; }
-.expires { font-size: .92rem; margin-bottom: 0; }
-.code-row { display: flex; flex-wrap: wrap; align-items: center; gap: .55rem; }
-.code-row code { padding: .5rem; background: #f5f2ec; font-size: 1rem; overflow-wrap: anywhere; }
-.copy-status { font-size: .85rem; }
+.lssk-benefits :focus-visible, .lssk-standalone :focus-visible { outline: 3px solid #98671f; outline-offset: 3px; }
+.lssk-benefits .error { color: #9d241d; }
+.lssk-benefits .offers { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr)); gap: 1rem; }
+.lssk-benefits .offer-logo { display: block; width: auto; height: 3rem; max-width: 100%; object-fit: contain; margin-bottom: 1rem; }
+.lssk-benefits .offer a { color: #694a20; display: inline-block; margin-top: .85rem; }
+.lssk-benefits .terms { white-space: pre-line; }
+.lssk-benefits .expires { font-size: .92rem; margin-bottom: 0; }
+.lssk-benefits .code-row { display: flex; flex-wrap: wrap; align-items: center; gap: .55rem; }
+.lssk-benefits .code-row code { padding: .5rem; background: #f5f2ec; font-size: 1rem; overflow-wrap: anywhere; }
+.lssk-benefits .copy-status { font-size: .85rem; }
+
+.lssk-benefits .lssk-embedded-logout { margin-bottom: 1rem; }

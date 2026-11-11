@@ -10,6 +10,12 @@ A WordPress plugin for offers available to club members. A board administrator m
 4. Under **Rabattkoder → Legg til tilbud**, enter the company name as the title and add the code. Choose a logo from the Media Library and optionally add a shop link, expiry date, or instructions. Publish the offer to display it to members. Return it to draft to hide it. An offer with an expiry date is displayed through that date in WordPress's configured time zone.
 5. Start with a dummy code. Check the QR scan and shared password in signed-out browsers, confirm a fresh private window never shows the dummy code without access, and repeat the checks after warming the page through the actual proxy and cache. Check that an edit to the dummy offer is visible through the same poster link.
 
+## WordPress page and navigation
+
+Create a normal WordPress page titled **Rabattkoder** and add a Shortcode block containing `[lssk_rabattkoder]`. On lssk.no, this page uses `/rabattkoder-for-medlemmer/`. Use it for navigation links that should keep the site theme. Leave `/rabattkoder/` reserved for the standalone QR and mobile page.
+
+Both views use the same shared password and browser session. The themed page fetches the protected panel from `/rabattkoder/?lssk_view=embed`. Keep this endpoint covered by the page cache exclusion above. The WordPress page itself contains no offer data.
+
 ## Rotation and operations
 
 The WordPress dashboard widget **Rabattkoder som snart utløper** shows administrators active codes expiring within 30 days, with the earliest expiry first and a link to edit each offer.
