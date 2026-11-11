@@ -235,3 +235,12 @@ Source: Appearance > Theme File Editor > active Firerangers Child > style.css, b
 Fixed the existing child stylesheet enqueue dependency in functions.php: select firerangers-style when SCRIPT_DEBUG is true, otherwise firerangers-minified-style. Its old unconditional dependency prevented the child handle from loading. The child stylesheet now uses filemtime(get_stylesheet_directory() . /style.css) as the version, so CSS edits invalidate cached copies. Preserve the existing translation and month-URL filters. The parent also emits firerangers-main pointing at the child stylesheet; this existing duplicate was retained.
 
 Validation: WordPress reported successful saves; public embed computed toolbar background rgb(40,46,41) and the versioned child stylesheet loaded. Previous-month navigation opened October 2026 and retained styling. Elementor mobile preview: outer section client/scroll widths both 323px, iframe 297px; embedded month table client/scroll widths both 240px. Selecting 28 November revealed Lofoten Cold Trigger with the correct event URL. Returned preview to desktop. Public browser viewport overrides were ineffective; responsive checks used Elementor. Signed-out and physical-device checks were not performed.
+
+
+## Calendar links and banner (2026-11-11)
+
+At the user’s request, page 5197 now has Firerangers Banner Settings > Show Banner set to Off. The club header/navigation and existing calendar remain. The source photograph and title are retained in page metadata for reversible restoration.
+
+Child-theme functions.php adds wp_footer callback at priority 30 for tec_calendar_embed only. Its capture-phase click handler routes ordinary unmodified same-origin /event/ links to window.top.location, preventing TEC’s new-tab behavior. Month/date navigation remains native; modified clicks retain browser behavior.
+
+Verified Page updated, public banner heading absent, and an actual click on Lofoten Cold Trigger navigated the existing top-level calendar tab to /event/lofoten-cold-trigger/; browser tab count remained 17. Returned to /kalender/.
