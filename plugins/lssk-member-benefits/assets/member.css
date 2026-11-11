@@ -1,0 +1,69 @@
+:root {
+	color-scheme: light;
+	font-family: system-ui, sans-serif;
+	color: #24211d;
+	background: #f5f2ec;
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; }
+[hidden] { display: none !important; }
+
+.site-header {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: .65rem 1rem;
+	background: #27241f;
+	padding: 1rem max(1.25rem, calc((100% - 65rem) / 2));
+}
+
+.site-header a { color: #fff; font-weight: 650; text-decoration: none; }
+.site-header button { background: transparent; border-color: #aa9e8f; }
+main { max-width: 65rem; margin: 0 auto; padding: clamp(1.25rem, 5vw, 3.5rem) 1.25rem; }
+h1 { margin: 0 0 1.35rem; font-size: clamp(2rem, 5vw, 3rem); line-height: 1.15; }
+h2 { margin: 0 0 .65rem; font-size: 1.35rem; }
+p { line-height: 1.55; }
+
+.panel {
+	background: #fff;
+	border: 1px solid #ddd5c7;
+	border-radius: .6rem;
+	padding: 1.4rem;
+	min-width: 0;
+}
+
+.access-panel { max-width: 30rem; }
+.access-panel > p:first-child { margin-top: 0; }
+.access-panel form { display: grid; gap: .75rem; }
+.access-panel input {
+	width: 100%;
+	border: 1px solid #85796b;
+	border-radius: .3rem;
+	font: inherit;
+	padding: .65rem;
+}
+
+button {
+	background: #3e3325;
+	color: #fff;
+	border: 1px solid transparent;
+	border-radius: .35rem;
+	font: inherit;
+	font-weight: 600;
+	cursor: pointer;
+	min-height: 44px;
+	padding: .55rem .8rem;
+}
+
+:focus-visible { outline: 3px solid #98671f; outline-offset: 3px; }
+.error { color: #9d241d; }
+.offers { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr)); gap: 1rem; }
+.offer-logo { display: block; width: auto; height: 3rem; max-width: 100%; object-fit: contain; margin-bottom: 1rem; }
+.offer a { color: #694a20; display: inline-block; margin-top: .85rem; }
+.terms { white-space: pre-line; }
+.expires { font-size: .92rem; margin-bottom: 0; }
+.code-row { display: flex; flex-wrap: wrap; align-items: center; gap: .55rem; }
+.code-row code { padding: .5rem; background: #f5f2ec; font-size: 1rem; overflow-wrap: anywhere; }
+.copy-status { font-size: .85rem; }

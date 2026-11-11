@@ -30,6 +30,8 @@ Documentation for the Lofoten Sportsskytterklubb website and club applications.
 
 ## Website features
 
+- [Rabattkoder](../plugins/lssk-member-benefits/README.md) — protected discount offers, QR poster downloads, and expiry reminders.
+
 - [Homepage sponsor presentation](homepage-sponsors.md) — sponsor invitations, responsive spotlight, moving logos, drag/touch behavior and maintenance source.
 - [Social sharing previews](social-sharing.md) — Open Graph/Twitter configuration and the standplass 7 sharing photograph.
 
