@@ -57,7 +57,17 @@ final class Plugin {
         return $secrets;
     }
 
+    /** SSI's club API key is valid Monday-Friday in Norwegian local time. */
+    public static function api_day_allowed( ?\DateTimeImmutable $now = null ) : bool {
+        $zone = new \DateTimeZone( 'Europe/Oslo' );
+        $local = $now ? $now->setTimezone( $zone ) : new \DateTimeImmutable( 'now', $zone );
+        return (int) $local->format( 'N' ) <= 5;
+    }
+
     public static function api() : SSI_API {
+        if ( ! self::api_day_allowed() ) {
+            throw new \RuntimeException( 'SSI-tilkoblingen er stengt i helgen (Europe/Oslo). Prøv igjen mandag.' );
+        }
         $credentials = self::credentials();
         if ( '' === $credentials['key'] ) {
             throw new \RuntimeException( 'Configure an SSI API key first.' );
@@ -94,7 +104,7 @@ final class Plugin {
     }
 
     public static function cron() : void {
-        if ( ! self::settings()['enabled'] ) {
+        if ( ! self::settings()['enabled'] || ! self::api_day_allowed() ) {
             return;
         }
         try {
@@ -365,7 +375,7 @@ final class Plugin {
             <tr><th>Credentials</th><td><label><input type="checkbox" name="clear_credentials" value="1"> Clear stored credentials before saving replacement values</label><p class="description">Stored in the WordPress database without autoload, not encrypted. No SSI password is stored. Prefer LSSK_SSI_API_KEY in wp-config.php for the API key.</p></td></tr>
             <tr><th>SSI terms</th><td><label><input type="checkbox" name="accepted" value="1" <?php checked( $settings['accepted'] ); ?>> I have reviewed and accepted SSI's developer/API terms for this integration.</label><p><a href="https://shootnscoreit.com/about-the-api/" target="_blank" rel="noopener noreferrer">API documentation and developer agreement</a></p></td></tr>
             <tr><th>Publishing</th><td><label><input type="checkbox" name="publish" value="1" <?php checked( $settings['publish'] ); ?>> Publish public SSI events automatically</label><p class="description">Unchecked: new and updated imported entries are drafts. Cancelled or non-public entries returned by SSI are moved to draft. Trashed entries stay trashed.</p></td></tr>
-            <tr><th>Schedule</th><td><label><input type="checkbox" name="enabled" value="1" <?php checked( $settings['enabled'] ); ?>> Enable hourly synchronization</label><p class="description">Uses WP-Cron. Low-traffic sites should trigger WordPress cron from the server scheduler.</p></td></tr>
+            <tr><th>Schedule</th><td><label><input type="checkbox" name="enabled" value="1" <?php checked( $settings['enabled'] ); ?>> Aktiver synkronisering hver time mandag–fredag</label><p class="description">Helgesperre: Ingen SSI-kall lørdag eller søndag, etter Europe/Oslo (også sommertid). Kalenderen vises fortsatt. Bruker WP-Cron; ved lite trafikk bør serveren starte WordPress cron.</p><?php $next = wp_next_scheduled( self::HOOK ); if ( $next ) : ?><p class="description">Neste planlagte kontroll: <?php echo esc_html( wp_date( 'd.m.Y H:i T', $next, new \DateTimeZone( 'Europe/Oslo' ) ) ); ?>. Helgekontroller hopper over SSI.</p><?php endif; ?></td></tr>
         </table>
         <?php submit_button( 'Save settings' ); ?>
         </form>
