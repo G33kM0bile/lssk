@@ -79,3 +79,46 @@ This section supersedes the earlier import blocker above. The user explicitly ap
 - Verified the published calendar contains Cold Trigger on 28 November, and clicking its link opens a separate working event tab. The event shows the canonical SSI link, Slydalen Skytbane, Norwegian copy and club footer. Elementor mobile preview at 343px supports selecting the marked 28th and then displays the event without horizontal overflow. The public tab was checked while signed in; a signed-out check was not completed.
 - Regression cases were added to tests/run.php for res with English/localized labels, excluded private/unknown codes, relative and scheme-less SSI links, foreign-host rejection and omission of participant/free-text data. **The standalone PHP suite was not run in this workspace because PHP is unavailable**; live preview, draft round-trip, duplicate check, publication and frontend checks passed. Do not report the fixture suite as passing without running it in a PHP environment.
 - The live Event Mapper changes are committed in this repository. **The old 0.2.0 ZIP has not been regenerated** and does not contain these fixes. Do not overwrite the patched mapper with that archive; build a new versioned package from current source before a reinstall or migration.
+
+## Month navigation follow-up — 11 November 2026
+
+A fresh frontend check exposed malformed month rewrite URLs such as `/events/(/?:month)/2026-10/&embed=6008fd99`, which opened the wrong view. Saving the existing permalink settings unchanged did not resolve this. A narrowly scoped fallback is now installed in the active child theme `functions.php`. It replaces only URLs containing that malformed month expression with TEC query URLs, preserves the event month and embed identifier, and leaves valid URLs unchanged. It uses the supported view URL/previous/next filters plus the template-vars filter for the current-month link.
+
+Verified on the public landing page: November → October retains the month grid; October → November works; October → “Denne måneden” returns to November. The next-month button is disabled at the last month with an event under the existing out-of-range setting. No wholesale `/events/` redirect was added. The public checks used the signed-in browser.
+
+Exact deployed fallback (after the existing child-theme functions; do not add a second PHP opening tag):
+
+```php
+// TEC can leak a rewrite regular expression into month links after localization.
+// Use the supported query URL only for malformed month links; leave valid URLs alone.
+function lssk_calendar_month_url( $url ) {
+    if ( ! is_string( $url ) ) {
+        return $url;
+    }
+    $decoded = rawurldecode( $url );
+    if ( ! preg_match( '~\(/?\?:month\)~', $decoded ) ) {
+        return $url;
+    }
+    $args = array( 'eventDisplay' => 'month' );
+    if ( preg_match( '~/(\d{4}-\d{2}(?:-\d{2})?)(?:/|[?&]|$)~', $decoded, $date ) ) {
+        $args['eventDate'] = strlen( $date[1] ) === 7 ? $date[1] . '-01' : $date[1];
+    }
+    if ( preg_match( '~[?&]embed=([a-zA-Z0-9_-]+)~', $decoded, $embed ) ) {
+        $args['embed'] = $embed[1];
+    }
+    return add_query_arg( $args, home_url( '/events/' ) );
+}
+add_filter( 'tribe_events_views_v2_view_url', 'lssk_calendar_month_url', 99 );
+add_filter( 'tribe_events_views_v2_view_prev_url', 'lssk_calendar_month_url', 99 );
+add_filter( 'tribe_events_views_v2_view_next_url', 'lssk_calendar_month_url', 99 );
+
+// Also normalize the current-month link exported directly to the template.
+add_filter( 'tribe_events_views_v2_view_template_vars', function ( $vars ) {
+    foreach ( $vars as $key => $value ) {
+        if ( is_string( $value ) && false !== strpos( $value, home_url( '/events/' ) ) ) {
+            $vars[ $key ] = lssk_calendar_month_url( $value );
+        }
+    }
+    return $vars;
+}, 99 );
+```
