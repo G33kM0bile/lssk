@@ -170,6 +170,29 @@ function rotate_access(): void {
 }
 add_action( 'admin_post_lssk_rotate_access', __NAMESPACE__ . '\rotate_access' );
 
+function remember_current_password(): void {
+	if ( ! current_user_can( 'manage_options' ) ) {
+		wp_die( 'Du har ikke tilgang til denne handlingen.', '', array( 'response' => 403 ) );
+	}
+	check_admin_referer( 'lssk_remember_password' );
+
+	$settings = access_settings();
+	$password = trim( posted_text( 'lssk_password' ) );
+	$result = 'current_invalid';
+	if ( $settings['generation'] !== '' && $settings['password'] !== '' && strlen( $password ) <= 512 &&
+		wp_check_password( $password, $settings['password'] ) ) {
+		$encrypted = encrypt_current_password( $password, $settings['generation'] );
+		$result = 'failed';
+		if ( $encrypted !== '' ) {
+			$settings['password_encrypted'] = $encrypted;
+			$result = update_option( ACCESS_OPTION, $settings, false ) ? 'current_saved' : 'failed';
+		}
+	}
+	wp_safe_redirect( add_query_arg( 'lssk_result', $result, access_admin_url() ), 303 );
+	exit;
+}
+add_action( 'admin_post_lssk_remember_password', __NAMESPACE__ . '\remember_current_password' );
+
 function render_access_page(): void {
 	if ( ! current_user_can( 'manage_options' ) ) {
 		return;
@@ -193,6 +216,10 @@ function render_access_page(): void {
 			<div class="notice notice-error"><p>Velg et annet passord på 8–128 tegn. Bruk gjerne en passordgenerator.</p></div>
 		<?php elseif ( $result === 'failed' ) : ?>
 			<div class="notice notice-error"><p>Tilgangen kunne ikke lagres. Prøv på nytt.</p></div>
+		<?php elseif ( $result === 'current_saved' ) : ?>
+			<div class="notice notice-success"><p>Det gjeldende passordet kan nå vises.</p></div>
+		<?php elseif ( $result === 'current_invalid' ) : ?>
+			<div class="notice notice-error"><p>Passordet stemmer ikke med gjeldende fellespassord.</p></div>
 		<?php endif; ?>
 		<p>Medlemsside: <a href="<?php echo esc_url( member_url() ); ?>"><?php echo esc_html( member_url() ); ?></a></p>
 		<?php if ( $configured ) : ?>
@@ -201,11 +228,20 @@ function render_access_page(): void {
 				<p><label for="lssk-current-password">Fellespassord</label><br>
 					<input class="regular-text" id="lssk-current-password" type="text" readonly autocomplete="off" value="<?php echo esc_attr( $current_password ); ?>">
 					<a class="button" href="<?php echo esc_url( access_admin_url() ); ?>">Skjul passord</a></p>
-			<?php elseif ( $reveal_requested ) : ?>
-				<p>Passordet kan ikke vises med gjeldende servernøkkel. Du kan sette et nytt passord under Forny tilgang.</p>
-			<?php elseif ( $encrypted_password === '' ) : ?>
+			<?php elseif ( $encrypted_password === '' || $reveal_requested ) : ?>
 				<?php $encryption_error = password_encryption_error(); ?>
-				<p><?php echo esc_html( $encryption_error ?: 'Dette passordet ble lagret uten en kryptert kopi. Visning blir tilgjengelig når et nytt passord settes.' ); ?></p>
+				<?php if ( $encryption_error !== '' ) : ?>
+					<p><?php echo esc_html( $encryption_error ); ?></p>
+				<?php else : ?>
+					<p>Legg inn det gjeldende passordet for å lagre en kryptert kopi.</p>
+					<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
+						<input type="hidden" name="action" value="lssk_remember_password">
+						<?php wp_nonce_field( 'lssk_remember_password' ); ?>
+						<p><label for="lssk-remember-password">Gjeldende fellespassord</label><br>
+							<input class="regular-text" id="lssk-remember-password" name="lssk_password" type="password" required maxlength="128" autocomplete="off"></p>
+						<button class="button" type="submit">Lagre gjeldende passord</button>
+					</form>
+				<?php endif; ?>
 			<?php else : ?>
 				<form method="post" action="<?php echo esc_url( access_admin_url() ); ?>">
 					<?php wp_nonce_field( 'lssk_reveal_password' ); ?>
