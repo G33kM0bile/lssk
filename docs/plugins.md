@@ -12,8 +12,8 @@ This file documents the purpose of notable plugins. Update it when the stack cha
 
 ## Custom integrations
 
-- **LSSK SSI Sync** — imports public Shoot'n Score It organization 60 events into The Events Calendar. Version 0.1.0 is available in this repository; deployment and live SSI authentication are still pending. Defaults to preview/manual operation and draft imports, with optional hourly sync and publishing.
-- [Setup and deployment notes](ssi-sync.md), [source and full guide](../plugins/lssk-ssi-sync/README.md), [installable ZIP](../dist/lssk-ssi-sync-0.1.0.zip).
+- **LSSK SSI Sync** — live on lssk.no. The authenticated API import published 35 eligible Shoot'n Score It organization 60 events into The Events Calendar and excluded 2. Publishing on manual sync is enabled, and hourly scheduling is disabled.
+- [Deployment and live verification](ssi-sync.md) and [plugin source and setup guide](../plugins/lssk-ssi-sync/README.md). Build a fresh ZIP from the current source for a reinstall.
 
 ## Administration and environment
 

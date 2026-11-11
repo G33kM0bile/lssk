@@ -35,10 +35,10 @@ Documentation for the Lofoten Sportsskytterklubb website and club applications.
 
 ## Calendar integration
 
-- [Shoot'n Score It synchronization](ssi-sync.md) — integration overview, deployment steps, and synchronization behavior.
+- [Shoot'n Score It synchronization](ssi-sync.md) — **Live in production.** The verified import published 35 eligible events to the [club calendar](https://lssk.no/kalender/). Sync runs manually, with hourly scheduling disabled.
 - [LSSK SSI Sync setup guide and source](../plugins/lssk-ssi-sync/README.md) — credentials, preview, draft imports, scheduling, and troubleshooting.
-- [SSI Sync validation](../plugins/lssk-ssi-sync/VALIDATION.md) — completed local checks and remaining live verification.
-- [Installable SSI Sync ZIP](../dist/lssk-ssi-sync-0.1.0.zip?raw=true).
+- [Live import verification](ssi-sync.md#verified-live-import-after-approved-visibility-change) and [local validation notes](../plugins/lssk-ssi-sync/VALIDATION.md).
+- Build a fresh ZIP from the current source before reinstalling. The existing ZIPs predate the production fixes.
 
 ## Shot Counter
 

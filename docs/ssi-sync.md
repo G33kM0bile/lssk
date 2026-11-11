@@ -5,7 +5,7 @@ LSSK SSI Sync imports public events from [SSI organization 60](https://shootnsco
 ## Files
 
 - [Plugin source and complete setup guide](../plugins/lssk-ssi-sync/README.md)
-- [Installable version 0.2.0 ZIP](../dist/lssk-ssi-sync-0.2.0.zip?raw=true)
+- [Archived version 0.2.0 ZIP](../dist/lssk-ssi-sync-0.2.0.zip?raw=true), created before the production fixes. Build a new package from current source for a reinstall.
 - [Validation results](../plugins/lssk-ssi-sync/VALIDATION.md)
 - [Standalone behavioral tests](../plugins/lssk-ssi-sync/tests/run.php)
 - [Disposable WordPress integration test](../plugins/lssk-ssi-sync/tests/wordpress-smoke.php)
@@ -18,7 +18,7 @@ Version **0.2.0 was installed and activated on production lssk.no on 10 November
 
 The new form exchanges an SSI email/password for access and refresh tokens. Neither the email nor the password is saved by the plugin. The account holder enters their password directly on production; there is no need to share it with another administrator. Manual token entry remains supported. A key-only organization read in SSI's interface returned `User must be authenticated`; all queried organization/event fields and argument types match the current schema. The configured key belongs to the club's responsible person; a closed key on a different user's profile does not establish that this configured key is closed. The owner's supplied screenshot showed a weekday-enabled key; arrange seven-day approval with SSI before relying on weekend syncing.
 
-There is no calendar widget prerequisite for syncing. Entries can be inspected directly in The Events Calendar. Successful sign-in/preview is still required before enabling unattended publication.
+There is no calendar widget prerequisite for syncing. Entries can be inspected directly in The Events Calendar. The production sign-in, preview and manual publication are verified. Hourly scheduling is still disabled.
 
 ## Initial calendar setup and investigation (historical)
 
@@ -29,9 +29,9 @@ There is no calendar widget prerequisite for syncing. Entries can be inspected d
 - WPFront Notification Bar > Custom CSS hides the notice only on body.single-tec_calendar_embed: #wpfront-notification-bar-spacer, #wpfront-notification-bar and #wpfront-notification-bar-open-button. The outer site's notice remains. TEC Month View Cache was disabled during localization verification. No permanent child-theme stylesheet change remains.
 - Verified one published calendar iframe, Norwegian empty-state text, public next-month navigation, retained header/footer, and Elementor mobile preview at 343px document/scroll width. The browser viewport override did not reliably resize the public tab, so mobile checking used Elementor. No signed-out or real-event detail test was completed. No demo/fabricated events were created.
 
-### Why there are no events yet
+### Initial visibility filter blocked imports
 
-The importer currently accepts only an English visibility display label beginning with Public. SSI's API documentation says display labels can be localized; raw values and choices are available separately. The 37 skipped records are not proof that all source events are private.
+The original importer accepted only an English visibility display label beginning with Public. SSI's API documentation says display labels can be localized; raw values and choices are available separately. The 37 skipped records are not proof that all source events are private.
 
 The signed-in SSI organization page for organization 60 shows **Lofoten Cold Trigger**, event **22/30342**, on **28 November 2026 at 10:00 Europe/Oslo**, at Slydalen Skytbane. Its event page explicitly says: “Synliggjøring av informasjon er begrenset tilgang; synlig og søkbar, men kun detaljer og navn på deltakerne.” This differs from the importer's strict Public-only rule. The other 36 events were not individually checked.
 
