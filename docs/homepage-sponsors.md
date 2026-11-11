@@ -1,16 +1,30 @@
 # Homepage sponsor presentation
 
-Updated 2026-10-22. Public section: https://lssk.no/#lssk-sponsors.
+
+Updated 2026-11-11. Public section: https://lssk.no/#lssk-sponsors.
+
 
 ## Source of truth
 
+
 Edit homepage **193** in Elementor, HTML widget **8902097**, container **ada784f**. The maintenance copy is [widgets/homepage-sponsors.html](../widgets/homepage-sponsors.html). GitHub changes do not deploy to WordPress automatically: replace the complete widget code in Elementor, publish, verify signed out, then update this copy.
+
 
 ## Current public content
 
-The club has no confirmed sponsors yet. The section invites businesses to support the club; it does not claim existing sponsorship agreements. All three panels and small logo choices currently use the club's existing `LSK-Logo.svg`. Test notices and demonstration labels were removed at the user's request. Replace these entries with actual sponsor names, logos, descriptions and website links when agreed. Preserve original logo colours. Do not invent prices, tiers or contributions.
+
+JB Shooting and TactX were confirmed by the user and published on 2026-11-11 in the first two existing panels and corresponding logo choices. The third panel remains an invitation for new supporters. Preserve original logo colours; no discounts, prices, tiers or contribution amounts are public.
+
+| Panel | Sponsor | Website | Official logo source |
+| --- | --- | --- | --- |
+| 1 | JB Shooting | https://www.jbshooting.com/ | https://www.jbshooting.com/wp-content/uploads/2024/06/Logo_JBS_Brown.svg |
+| 2 | TactX | https://tactx.no/ | https://tactx.no/cdn/shop/files/logo_230x@2x.png?v=1614898377 |
+
+Logo downloads and asset export timed out, so the widget currently loads the official external logo URLs with referrerpolicy=no-referrer. These remain dependent on the suppliers' hosting; move them into WordPress Media when local logo copies are available. Outbound website links use rel=sponsored noopener noreferrer and open in a new tab.
+
 
 ## Layout and interaction
+
 
 - Cream, brown/green and gold palette, target rings, crosshair, soft red dot and a short hit-ring/logo animation when the main panel changes. No sound or device-motion access.
 - Two-column presentation on desktop, stacked visual/copy on mobile. Compact logo row uses 84px choices and 8px gaps, including desktop.
@@ -21,14 +35,21 @@ The club has no confirmed sponsors yet. The section invites businesses to suppor
 - Reduced-motion preference removes animations and automatic movement and leaves the three original choices available for native scrolling. Without JavaScript, the first panel/contact link remain readable.
 - Event listeners, animation frames, timers and observers are cleaned up on removal or Elementor reinitialization. No external slider library or visitor tracking.
 
+
 ## Maintenance
+
 
 Update each `.ls-panel` and its corresponding original `.ls-choice`; JavaScript generates repeated logos. Give buttons and slides meaningful accessible names. Use appropriate sponsored links for actual sponsor destinations. Update numbering/labels if the number of panels changes; simplify navigation for a single sponsor.
 
+
 The outer section is currently visible. Adding `hidden` to `#lssk-sponsors` hides it publicly and hides the surrounding container to avoid a gap; Elementor still shows it for editing. Keep the container-specific CSS selector in sync if moving the widget.
+
 
 ## Verification and limitations
 
+
 Signed-out public desktop testing verified selection of panel 2, a 300px mouse drag (scrollLeft 1104 to 1404) without changing the panel, and an immediate click selecting panel 1. A local browser test also moved 280px one way and 250px back. Pause control is absent. At a 390px mobile viewport the section client/scroll widths are both 355px, with native horizontal scrolling and `touch-action: pan-x pan-y`. The user previously approved the mobile appearance. Actual finger gestures on a physical phone remain to be confirmed by the user.
 
+
 The live WordPress widget is the deployed source. No calendar, SSI Sync, Shot Counter application or infrastructure configuration was changed as part of this section.
+
