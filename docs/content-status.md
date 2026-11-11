@@ -244,3 +244,8 @@ At the user’s request, page 5197 now has Firerangers Banner Settings > Show Ba
 Child-theme functions.php adds wp_footer callback at priority 30 for tec_calendar_embed only. Its capture-phase click handler routes ordinary unmodified same-origin /event/ links to window.top.location, preventing TEC’s new-tab behavior. Month/date navigation remains native; modified clicks retain browser behavior.
 
 Verified Page updated, public banner heading absent, and an actual click on Lofoten Cold Trigger navigated the existing top-level calendar tab to /event/lofoten-cold-trigger/; browser tab count remained 17. Returned to /kalender/.
+
+
+## Compact calendar banner restored (2026-11-11)
+
+Supersedes the previous banner removal: user requested restoring the range photograph/title in a smaller banner. Page 5197 > Firerangers Banner Settings > Show Banner is On again. Calendar-only child style.css rules under Compact calendar banner reduce desktop height from about 573px to 365px (250px/64px inner padding, 46px heading), move breadcrumbs to 20px from the bottom and reduce the following calendar gap. Mobile removes the theme’s extra section padding and uses 90px/56px inner padding, with breadcrumbs 16px from the bottom. Original photo, header/footer, live calendar and same-tab event navigation are retained.
