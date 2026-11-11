@@ -15,7 +15,7 @@ Documentation for the Lofoten Sportsskytterklubb website and club applications.
 
 ## Email
 
-- [Club email architecture proposal](email.md) — shared `post@lssk.no` mailbox, WordPress/TiboMail staging evaluation, member addresses, routing, security and rollout checklist.
+- [Club email setup and rollout](email.md) — **Rollout in progress.** The shared `post@lssk.no` mailbox is live on Purelymail with TiboMail Free in production. Board onboarding, shared Inbox and Sent access, and contact-form delivery checks are pending.
 
 ## WordPress administration
 
