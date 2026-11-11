@@ -14,11 +14,11 @@ LSSK SSI Sync imports public events from [SSI organization 60](https://shootnsco
 
 ## Deployment status
 
-Version **0.2.0 was installed and activated on production lssk.no on 10 November 2026**, followed by source fixes for verified visibility codes, source URL normalization and Norwegian descriptions. The authenticated integration is configured for organization 60 and Europe/Oslo. Current state: **35 real entries published, 2 excluded, publication on manual sync enabled, hourly scheduling disabled**. The final repeat at 2026-11-10 23:18:54 UTC created/updated zero posts and found no duplicates. See the final verification section below for details and deployment caveats.
+Version **0.2.0 was installed and activated on production lssk.no on 10 November 2026**, followed by source fixes for verified visibility codes, source URL normalization and Norwegian descriptions. The authenticated integration is configured for organization 60 and Europe/Oslo. Current state: **35 real entries published, 2 excluded, automatic publication enabled, hourly weekday scheduling enabled (Europe/Oslo)**. The final repeat at 2026-11-10 23:18:54 UTC created/updated zero posts and found no duplicates. See the final verification section below for details and deployment caveats.
 
 The new form exchanges an SSI email/password for access and refresh tokens. Neither the email nor the password is saved by the plugin. The account holder enters their password directly on production; there is no need to share it with another administrator. Manual token entry remains supported. A key-only organization read in SSI's interface returned `User must be authenticated`; all queried organization/event fields and argument types match the current schema. The configured key belongs to the club's responsible person; a closed key on a different user's profile does not establish that this configured key is closed. The owner's supplied screenshot showed a weekday-enabled key; arrange seven-day approval with SSI before relying on weekend syncing.
 
-There is no calendar widget prerequisite for syncing. Entries can be inspected directly in The Events Calendar. The production sign-in, preview and manual publication are verified. Hourly scheduling is still disabled.
+There is no calendar widget prerequisite for syncing. Entries can be inspected directly in The Events Calendar. The production sign-in, preview and publication are verified. Hourly weekday scheduling was enabled on 11 November 2026; see the weekday scheduling section below.
 
 ## Initial calendar setup and investigation (historical)
 
@@ -122,3 +122,13 @@ add_filter( 'tribe_events_views_v2_view_template_vars', function ( $vars ) {
     return $vars;
 }, 99 );
 ```
+
+## Weekday automatic synchronization — 11 November 2026
+
+The user confirmed that the SSI API key does not permit weekend use and authorized hourly synchronization Monday–Friday. Production now has scheduling and publication enabled. Existing publication safeguards still accept only verified pub/res basic information; private/unknown categories remain excluded.
+
+`Plugin::api_day_allowed()` determines the weekday in **Europe/Oslo**, including daylight saving time, independently of the server or configurable event timezone. The hourly WP-Cron callback returns before creating an API client on Saturday/Sunday. The API factory also rejects manual preview/sync/connect attempts during the weekend with a Norwegian message, before reading credentials or making network calls. Existing published events continue to display throughout the weekend; changes made at SSI during the weekend are fetched on the next successful weekday run.
+
+WP-Cron retains an hourly local control event, including weekend checks that perform no SSI work. A delayed job uses its actual execution time, so a Friday job first executed Saturday is skipped. The current schedule and its next check are visible under Settings → LSSK SSI Sync. WP-Cron depends on site requests or an existing server cron trigger; exact wall-clock execution is not guaranteed. No server scheduler was changed.
+
+The deployed changes are in `plugins/lssk-ssi-sync/includes/class-plugin.php`, matching the GitHub source. WordPress accepted the PHP update and the enabled schedule was verified in settings. The standalone PHP suite remains unrun because PHP is unavailable in this workspace; a real weekend execution has not yet occurred. The archived 0.2.0 ZIP remains stale and must not overwrite the current source.
