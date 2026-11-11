@@ -16,7 +16,7 @@ The WordPress dashboard widget **Rabattkoder som snart utløper** shows administ
 
 After updating from version 0.1.2 or older, download a new QR image for /rabattkoder/. The previous URL, /medlemsfordeler/, is available for a public WordPress page.
 
-For a branded poster, download **Last ned QR-kode med logo (PNG)**. The preview uses the WordPress site icon or theme logo by default. Choose **Velg QR-logo** to use another image from the Media Library for that download. Both PNGs encode the same access link. Scan a printed copy before posting it.
+For a branded poster, download **Last ned QR-kode med logo (PNG)**. The preview starts with the WordPress site icon or theme logo. **Velg QR-logo** saves an image from the Media Library for future QR codes and posters. **Fjern QR-logo** saves the plain QR preference. Both PNGs encode the same access link. Scan a printed copy before posting it.
 
 **Last ned plakat (PNG)** combines the selected QR image, page address and shared password in one portrait image. Reveal the current password to fill the poster field automatically, or type it into the poster field. The typed value is used by the browser to draw the poster.
 

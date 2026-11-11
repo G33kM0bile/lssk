@@ -108,11 +108,48 @@
 		library: { type: 'image' },
 		multiple: false,
 	});
+	const chooseQrLogo = document.querySelector('#lssk-qr-choose-logo');
+	const removeQrLogo = document.querySelector('#lssk-qr-remove-logo');
+	let savedLogoUrl = canvas.dataset.logoUrl;
+	async function saveLogo(id) {
+		chooseQrLogo.disabled = removeQrLogo.disabled = true;
+		try {
+			const response = await fetch(ajaxurl, {
+				method: 'POST',
+				body: new URLSearchParams({
+					action: 'lssk_save_qr_logo',
+					logo_id: id,
+					_ajax_nonce: canvas.dataset.logoNonce,
+				}),
+			});
+			const result = await response.json();
+			if (!response.ok || !result.success) throw new Error();
+			savedLogoUrl = result.data.url;
+			if (savedLogoUrl) {
+				loadLogo(savedLogoUrl);
+			} else {
+				pendingLogo = null;
+				brandedDownload.hidden = true;
+				brandedDownload.removeAttribute('href');
+				drawQr(plainQr);
+				posterButton.disabled = false;
+				status.hidden = true;
+			}
+		} catch {
+			status.textContent = 'Kunne ikke lagre QR-logoen. Prøv på nytt.';
+			status.hidden = false;
+		} finally {
+			chooseQrLogo.disabled = false;
+			removeQrLogo.disabled = !savedLogoUrl;
+		}
+	}
+
 	logoPicker.on('select', () => {
 		const logo = logoPicker.state().get('selection').first().toJSON();
-		loadLogo(logo.sizes?.medium?.url || logo.url);
+		saveLogo(logo.id);
 	});
-	document.querySelector('#lssk-qr-choose-logo').addEventListener('click', () => logoPicker.open());
+	chooseQrLogo.addEventListener('click', () => logoPicker.open());
+	removeQrLogo.addEventListener('click', () => saveLogo(0));
 	const posterForm = document.querySelector('#lssk-poster-form');
 	const posterPassword = document.querySelector('#lssk-poster-password');
 	posterForm.addEventListener('submit', (event) => {

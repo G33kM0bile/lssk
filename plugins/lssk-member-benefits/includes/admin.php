@@ -102,6 +102,29 @@ function verify_password_reveal(): void {
 	}
 }
 
+function save_qr_logo(): void {
+	if ( ! current_user_can( 'manage_options' ) ) {
+		wp_send_json_error( null, 403 );
+	}
+	check_ajax_referer( 'lssk_save_qr_logo' );
+
+	$value = posted_text( 'logo_id' );
+	if ( ! preg_match( '/\A[0-9]+\z/', $value ) ) {
+		wp_send_json_error( null, 400 );
+	}
+
+	$id = (int) $value;
+	$url = $id && wp_attachment_is_image( $id ) ? wp_get_attachment_image_url( $id, 'medium' ) : '';
+	if ( $id && ! $url ) {
+		wp_send_json_error( null, 400 );
+	}
+	if ( ! update_option( 'lssk_benefits_qr_logo', $id, false ) && (int) get_option( 'lssk_benefits_qr_logo', -1 ) !== $id ) {
+		wp_send_json_error( null, 500 );
+	}
+	wp_send_json_success( array( 'url' => $url ) );
+}
+add_action( 'wp_ajax_lssk_save_qr_logo', __NAMESPACE__ . '\save_qr_logo' );
+
 function register_expiry_widget(): void {
 	if ( current_user_can( 'manage_options' ) ) {
 		wp_add_dashboard_widget( 'lssk_expiring_codes', 'Rabattkoder som snart utløper', __NAMESPACE__ . '\render_expiry_widget' );
@@ -252,13 +275,17 @@ function render_access_page(): void {
 			<p>Medlemmer kan skanne koden for å åpne siden. Heng den opp på banen og erstatt plakaten når tilgangen fornyes.</p>
 			<?php
 			$scan_url = member_url() . '#tilgang=' . qr_token( $settings['generation'] );
-			$logo_url = get_site_icon_url( 192 ) ?: wp_get_attachment_image_url( (int) get_theme_mod( 'custom_logo' ), 'medium' );
+			$logo_id = get_option( 'lssk_benefits_qr_logo', false );
+			$logo_url = $logo_id === false
+				? ( get_site_icon_url( 192 ) ?: wp_get_attachment_image_url( (int) get_theme_mod( 'custom_logo' ), 'medium' ) )
+				: ( $logo_id ? wp_get_attachment_image_url( (int) $logo_id, 'medium' ) : '' );
 			?>
-			<canvas id="lssk-qr-canvas" data-access-url="<?php echo esc_attr( $scan_url ); ?>" data-logo-url="<?php echo esc_url( $logo_url ?: '' ); ?>" role="img" aria-label="QR-kode for rabattkoder" hidden></canvas>
+			<canvas id="lssk-qr-canvas" data-access-url="<?php echo esc_attr( $scan_url ); ?>" data-logo-url="<?php echo esc_url( $logo_url ?: '' ); ?>" data-logo-nonce="<?php echo esc_attr( wp_create_nonce( 'lssk_save_qr_logo' ) ); ?>" role="img" aria-label="QR-kode for rabattkoder" hidden></canvas>
 			<p>
 				<a class="button" id="lssk-qr-download" download="lssk-rabattkoder-qr.png" hidden>Last ned QR-kode (PNG)</a>
 				<a class="button" id="lssk-qr-branded-download" download="lssk-rabattkoder-qr-med-logo.png" hidden>Last ned QR-kode med logo (PNG)</a>
 				<button class="button" type="button" id="lssk-qr-choose-logo">Velg QR-logo</button>
+				<button class="button" type="button" id="lssk-qr-remove-logo" <?php disabled( ! $logo_url ); ?>>Fjern QR-logo</button>
 			</p>
 			<p id="lssk-qr-logo-status" role="status" hidden></p>
 			<p><label for="lssk-scan-url">QR-lenke</label><br><input class="large-text" id="lssk-scan-url" type="text" readonly value="<?php echo esc_attr( $scan_url ); ?>"></p>
