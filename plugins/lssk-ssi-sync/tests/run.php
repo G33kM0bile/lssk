@@ -103,7 +103,7 @@ fails( static fn() => Event_Mapper::map( fixture( array( 'starts' => '2026-02-30
 fails( static fn() => Event_Mapper::map( fixture( array( 'ends' => '2026-10-16T15:00:00Z' ) ), $settings ), 'Reject end before start' );
 fails( static fn() => Event_Mapper::map( fixture( array( 'get_full_absolute_url' => 'https://evil.example/event/22/30091/' ) ), $settings ), 'Reject unexpected source hosts' );
 fails( static fn() => Event_Mapper::map( fixture( array( 'get_full_absolute_url' => 'https://shootnscoreit.com/event/22/30091/?secret=123' ) ), $settings ), 'Reject source URLs carrying query credentials' );
-check( ! Event_Mapper::is_public( fixture( array( 'get_visibility_display' => 'Private' ) ) ) && ! Event_Mapper::is_public( array() ), 'Unknown and private visibility fail closed' );
+check( ! Event_Mapper::is_public( fixture( array( 'visibility' => 'pri', 'get_visibility_display' => 'Private' ) ) ) && ! Event_Mapper::is_public( array() ), 'Unknown and private visibility fail closed' );
 
 check( Event_Mapper::is_public( fixture( array( 'visibility' => 'res', 'get_visibility_display' => 'Restricted; visible, searchable but details/names only participants' ) ) ), 'Approved searchable restricted code is accepted' );
 check( Event_Mapper::is_public( fixture( array( 'visibility' => 'res', 'get_visibility_display' => 'Begrenset tilgang; synlig og søkbar' ) ) ), 'Approved raw code is independent of display language' );
@@ -112,6 +112,9 @@ check( ! Event_Mapper::is_public( fixture( array( 'visibility' => 'unknown', 'ge
 check( Event_Mapper::map( fixture( array( 'get_full_absolute_url' => '/event/22/30091/' ) ), $settings )['url'] === 'https://shootnscoreit.com/event/22/30091/', 'Relative SSI source URL becomes canonical HTTPS link' );
 check( Event_Mapper::map( fixture( array( 'get_full_absolute_url' => 'shootnscoreit.com/ipsc/match/30091/' ) ), $settings )['url'] === 'https://shootnscoreit.com/event/22/30091/', 'SSI hostname without a scheme becomes canonical HTTPS link' );
 fails( static fn() => Event_Mapper::map( fixture( array( 'get_full_absolute_url' => '//evil.example/event/22/30091/' ) ), $settings ), 'Protocol-relative external hosts are rejected' );
+check( Event_Mapper::is_public( fixture( array( 'visibility' => 'pub', 'get_visibility_display' => 'Public; visible, searchable and details/names for all' ) ) ), 'Public semicolon label is accepted by verified raw code' );
+check( ! Event_Mapper::is_public( fixture( array( 'visibility' => 'clb', 'get_visibility_display' => 'Club members only' ) ) ) && ! Event_Mapper::is_public( fixture( array( 'visibility' => 'lim', 'get_visibility_display' => 'Limited; visible but not searchable' ) ) ), 'Club-only and non-searchable events stay excluded' );
+check( ! Event_Mapper::is_public( fixture( array( 'visibility' => 'unknown', 'get_visibility_display' => 'Public; unexpected code' ) ) ), 'Unknown codes fail closed even with a public-looking label' );
 $minimal = Event_Mapper::map( fixture( array( 'description' => 'PRIVATE_DESCRIPTION_MARKER', 'competitors' => array( 'PRIVATE_PARTICIPANT_MARKER' ) ) ), $settings );
 check( ! str_contains( $minimal['content'], 'PRIVATE_DESCRIPTION_MARKER' ) && ! str_contains( $minimal['content'], 'PRIVATE_PARTICIPANT_MARKER' ), 'Only approved basic fields enter imported content' );
 
@@ -136,7 +139,7 @@ $options[Plugin::SETTINGS]['publish'] = true;
 queue_events( array( $changed ) );
 Plugin::run( false );
 check( 'publish' === get_post_status( 1 ), 'Publication requires explicit setting' );
-queue_events( array( fixture( array( 'get_visibility_display' => 'Private', 'name' => 'SECRET PRIVATE TITLE' ) ) ) );
+queue_events( array( fixture( array( 'visibility' => 'pri', 'get_visibility_display' => 'Private', 'name' => 'SECRET PRIVATE TITLE' ) ) ) );
 $r = Plugin::run( false );
 check( 'draft' === get_post_status( 1 ) && 1 === $r['hidden'] && ! str_contains( json_encode( $r ), 'SECRET PRIVATE TITLE' ), 'Previously public event becomes draft without storing private data' );
 queue_events( array( $changed ) ); Plugin::run( false );
