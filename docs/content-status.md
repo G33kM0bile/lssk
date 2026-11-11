@@ -215,3 +215,12 @@ A critical-error fault in the parent theme's tribe-events/single-event.php was f
 TEC date display now uses j. F Y, j. F, F Y, compact dd.mm.yyyy and kl. as date/time separator. Verified public calendar entry, working event/SSI links and event details. Elementor mobile preview (343px) supports selecting 28 November and shows Cold Trigger without horizontal overflow. Signed-out and physical-device checks were not performed.
 
 See [SSI synchronization](ssi-sync.md) for configuration details, scope, regression cases and live evidence. The mapper/tests are committed; the old 0.2.0 ZIP is not rebuilt and must not overwrite the production patch. Standalone PHP fixtures were not run here because PHP is unavailable; live draft/import/dedup/publication checks passed.
+
+
+## JB Shooting and TactX published (2026-11-11)
+
+Published the two user-confirmed sponsors in homepage 193, Elementor HTML widget 8902097 / container ada784f. Panels 1 and 2 and their original logo choices now show JB Shooting and TactX, with official unaltered logos and links to https://www.jbshooting.com/ and https://tactx.no/. Panel 3 remains available for new supporters. Existing carousel, colours, animations and scrolling behavior are retained. No discount codes or financial agreement details are public.
+
+Sponsor links open in a new tab with rel="sponsored noopener noreferrer". Logo downloads and browser asset export timed out; the widget currently loads the suppliers’ official external logo URLs with referrerpolicy="no-referrer". The dependency and exact sources are recorded in docs/homepage-sponsors.md. Move logos into WordPress Media when local copies are available. The published code is synchronized to widgets/homepage-sponsors.html.
+
+Verified the published homepage content and both logos loading, selected both sponsor panels and checked the TactX destination link. Elementor mobile preview: section client/scroll widths both 323px, single 285px panel column; no section overflow. Returned editor to desktop. Checks used the signed-in browser; signed-out and physical-device checks were not performed. Screenshot capture timed out, so verification used rendered DOM and layout measurements.
