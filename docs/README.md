@@ -30,6 +30,8 @@ Documentation for the Lofoten Sportsskytterklubb website and club applications.
 
 ## Website features
 
+- [LSSK – Kvartalskonkurranse](kvartalskonkurranse.md) — norsk bruker- og driftsveiledning: deltakerregistrering, seks kategorier, regler, endringspanel, tilgang, serverlagring og feilsøking. Satt opp på dev.lssk.no.
+
 - [Rabattkoder](../plugins/lssk-member-benefits/README.md) — protected discount offers, QR poster downloads, and expiry reminders.
 
 - [Homepage sponsor presentation](homepage-sponsors.md) — sponsor invitations, responsive spotlight, moving logos, drag/touch behavior and maintenance source.
