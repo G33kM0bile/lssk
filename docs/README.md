@@ -30,6 +30,8 @@ Documentation for the Lofoten Sportsskytterklubb website and club applications.
 
 ## Website features
 
+- [Informasjonskapsler og samtykke](cookies-and-consent.md) — norsk Complianz-banner, samtykkestyrt Matomo, eksterne tjenester, utforming, tester og videre kartlegging.
+
 - [LSSK – Kvartalskonkurranse](kvartalskonkurranse.md) — norsk bruker- og driftsveiledning: deltakerregistrering, seks kategorier, regler, endringspanel, tilgang, serverlagring og feilsøking. Satt opp på dev.lssk.no.
 
 - [Rabattkoder](../plugins/lssk-member-benefits/README.md) — protected discount offers, QR poster downloads, and expiry reminders.
